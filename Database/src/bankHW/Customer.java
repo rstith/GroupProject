@@ -30,7 +30,6 @@ public class Customer {
 	String LName;
 	String FName;
 	int CustNum;
-
 	
 	public Customer(String Last, String First, int CustID)
 	{

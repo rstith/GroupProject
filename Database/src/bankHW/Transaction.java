@@ -20,13 +20,12 @@
 package bankHW;
 
 import java.sql.ResultSet;
-import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
 
 public class Transaction {
 
-	public Date TransDate;
+	public String TransDate;
 	public String Description;
 	public double Value;
 	public int Account;
@@ -41,7 +40,7 @@ public class Transaction {
 		TransactionID = 0;
 	}
 	
-	public Transaction(int TransID, Date myDate, String Desc, double myVal, int Acct)
+	public Transaction(int TransID, String myDate, String Desc, double myVal, int Acct)
 	{
 		TransactionID = TransID;
 		TransDate = myDate;
@@ -58,19 +57,25 @@ public class Transaction {
 			Transaction trans = new Transaction();
 			while (res.next())
 			{
+				trans = new Transaction();
 				trans.TransactionID = res.getInt(1);
-				trans.TransDate = res.getDate(2);
-				trans.Description = res.getString(3);
+				trans.Account = res.getInt(2);
+				trans.TransDate = res.getString(3);
 				trans.Value = res.getDouble(4);
-				trans.Account = res.getInt(5);
+				trans.Description = res.getString(5);
 				transList.add(trans);
-	
 			}
+			return transList;
 		}
 		catch (Exception ex)
 		{
 			ex.printStackTrace();
 		}
-		return transList;
+		return null;
+	}
+	
+	public void PrintTrans(Transaction trans)
+	{
+		System.out.println("ID:"+trans.TransactionID+"Account:"+trans.Account+"TransDate:"+trans.TransDate+"Value"+trans.Value);
 	}
 }

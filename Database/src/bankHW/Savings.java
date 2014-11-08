@@ -25,22 +25,21 @@
 package bankHW;
 
 import java.sql.*;
-import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
 
 public class Savings {
 
-	SQLDriver db;
+	SQLDriver db = new SQLDriver();
 	public int CustNum;
 	public double Interest;
 	public int Account;
 	public double Value;
 	public double Overdraft;
-	public Date OpenDate;
+	public String OpenDate;
 	public Boolean Active;
 	
-	public Savings(int Cust, double Int, int Acct, double Val, double Over, Date myDate, Boolean isOpen)
+	public Savings(int Cust, double Int, int Acct, double Val, double Over, String myDate, Boolean isOpen)
 	{
 		CustNum = Cust;
 		Interest = Int;
@@ -75,7 +74,7 @@ public class Savings {
 				sav.Interest = res.getDouble(2);
 				sav.Value = res.getDouble(3);
 				sav.Overdraft = res.getDouble(4);
-				sav.OpenDate = res.getDate(5);
+				sav.OpenDate = res.getString(5);
 				sav.Active = res.getBoolean(6);
 				sav.CustNum = res.getInt(7);
 			}
@@ -100,7 +99,7 @@ public class Savings {
 			{
 				trans = new Transaction();
 				trans.TransactionID = res.getInt(1);
-				trans.TransDate = res.getDate(2);
+				trans.TransDate = res.getString(2);
 				trans.Description = res.getString(3);
 				trans.Value = res.getDouble(4);
 				trans.Account = res.getInt(5);
@@ -116,19 +115,21 @@ public class Savings {
 	
 	public void addTrans(Transaction trans)
 	{
-		String statement = "INSERT INTO savingsrecord VALUES ("+trans.TransactionID+","+trans.TransDate+","+trans.Description+","+trans.Value+","+trans.Account+");";
+		String statement = "INSERT INTO savingsrecord VALUES ("+trans.TransactionID+",\""+trans.TransDate+"\",\""+trans.Description+"\","+trans.Value+","+trans.Account+");";
+		System.out.println(statement);
 		db.insert(statement);
 	}
 	
 	public void updateSavings(Savings myRecord)
 	{
-		String statement = "UPDATE savings SET CustID = "+CustNum+",Interest ="+Interest+", Value="+Value+",Overdraft="+Overdraft+",Date="+OpenDate+",Active="+Active+" WHERE AccountNum = "+Account;
+		String statement = "UPDATE savings SET Owner = "+myRecord.CustNum+",Interest ="+myRecord.Interest+", Balance="+myRecord.Value+",Overdraft="+myRecord.Overdraft+",Opened=\""+myRecord.OpenDate+"\",Active="+myRecord.Active+" WHERE AcctID = "+myRecord.Account;
+		System.out.println(statement);
 		db.insert(statement);
 	}
 	
 	public void newRecord(Savings newSavings)
 	{
-		String statement = "INSERT INTO savings VALUES ("+newSavings.Account+","+newSavings.Interest+","+newSavings.Value+","+newSavings.Overdraft+","+newSavings.OpenDate+","+newSavings.Active+","+newSavings.CustNum+");";
+		String statement = "INSERT INTO savings VALUES ("+newSavings.Account+","+newSavings.Interest+","+newSavings.Value+","+newSavings.Overdraft+",\""+newSavings.OpenDate+"\","+newSavings.Active+","+newSavings.CustNum+");";
 		db.insert(statement);
 	}
 	
@@ -140,7 +141,7 @@ public class Savings {
 		try{
 			while (res.next())
 			{
-				Savings sav = new Savings(res.getInt(7),res.getDouble(2), res.getInt(1), res.getDouble(3), res.getDouble(4), res.getDate(5), res.getBoolean(6));
+				Savings sav = new Savings(res.getInt(7),res.getDouble(2), res.getInt(1), res.getDouble(3), res.getDouble(4), res.getString(5), res.getBoolean(6));
 				savArray.add(sav);
 			}
 		}

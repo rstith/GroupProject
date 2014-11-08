@@ -1,5 +1,7 @@
 package bankHW;
 import java.util.*;
+import java.sql.Date;
+
 
 public class Main {
 
@@ -10,11 +12,16 @@ public class Main {
 			Scanner reader = new Scanner(System.in);
 			int decision = 0;
 			Customer cust = new Customer();
+			java.util.Calendar cal = java.util.Calendar.getInstance();
+			java.util.Date utilDate = cal.getTime();
+			java.sql.Date sqlDate = new Date(utilDate.getTime());
+			List<Loan> transList;
+			Loan loan = new Loan();
 			
 			while (decision!=9)
 			{
 				System.out.println("Please make a menu selection");
-				System.out.println("1. Add a new customer");
+				System.out.println("1. CCard test");
 				System.out.println("2. Display all customers");
 				//System.out.println("3. Display account");
 				System.out.println("4. Display customer");
@@ -26,18 +33,83 @@ public class Main {
 				{
 				case 1: 
 					{
+						/*
+		OwnerID = Owner;
+		LoanID = Loan;
+		Type = LoanType;
+		Interest = Int;
+		Monthly = Month;
+		Total = Ttl;
+		NextDue = Next;
+		CurrAmt = Current;
+		Flag = Flagged;
+		LastFull = Last;
+						 */
+						
+						System.out.println("Owner ID");
+						int CustNum = reader.nextInt();
+						System.out.println("Loan ID");
+						int LoanNum = reader.nextInt();
+						System.out.println("Loan Type");
+						String Type = reader.next();
+						System.out.println("Interest");
+						double Interest = reader.nextDouble();
+						System.out.println("Monthly Payment");
+						double Monthly = reader.nextDouble();
+						System.out.println("Total");
+						double Total = reader.nextDouble();
+						System.out.println("Next payment due");
+						String NextDue = reader.next();
+						System.out.println("Current Owed");
+						double Owed = reader.nextDouble();
+						System.out.println("Flagged");
+						boolean Flag = reader.nextBoolean();
+						System.out.println("Last Full Payment");
+						String LastFull = reader.next();
+						
+						loan = new Loan(CustNum, LoanNum, Type, Interest, Monthly, Total, NextDue, Owed, Flag, LastFull);
+						loan.updateRecord(loan);
+						
+						
+						/*sav = new Savings(CustNum, Interest, Account, Balance, Overdraft, Open, true);
+						
+						sav2.updateSavings(sav);*/
+						/*cd = new CD(CustNum, DepositID, Balance, Interest, Maturity, Open, Rollover, Penalty);
+						//System.out.println(sav.getRecord(3).OpenDate);
+						Transaction trans;
+						System.out.println("Transaction ID");
+						int TransID = reader.nextInt();
+						System.out.println("Transaction Date");
+						String TDate = reader.next();
+						System.out.println("Description");
+						String Desc = reader.next();
+						System.out.println("Amount ");
+						double Value = reader.nextDouble();
+						System.out.println("Account");
+						int Account = reader.nextInt();
+						trans = new Transaction(TransID, TDate, Desc, Value, Account);
+						//sav.addTrans(trans);
+						*/
+						transList = loan.getRecord(3);
+
+						int size = transList.size();
+						for (int x = 0;x<size;x++)
+						{
+							System.out.println(transList.get(x).LoanID);
+						}
+						/*
 						System.out.print("Enter customer number");
 						int Customer = reader.nextInt();
 						System.out.print("Enter customer last name");
 						String LName = reader.next();
 						System.out.print("Enter customer first name");
-						String FName = reader.next();
+						String FName = reader.next();*/
 						//cust.add(LName, FName, Customer);
 						break;
 					}
 				case 2:
 				{
-					System.out.print("Enter customer number");
+					/*System.out.print("Enter customer number");
 					int Customer = reader.nextInt();
 					System.out.print("Interest rate");
 					double Interest = reader.nextDouble();
@@ -45,13 +117,14 @@ public class Main {
 					int Account = reader.nextInt();
 					System.out.print("Account balance");
 					double Value = reader.nextDouble();
+					System.out.println("Linked Savings Acct");
+					int Savings = reader.nextInt();
 					System.out.print("Allowed overdraft:");
-					double Overdraft = reader.nextDouble();
-					System.out.print("Checking account to link");
-					int Checking = reader.nextInt();
-					String Date = "20141021";
-					Customer newcust = new Customer(Customer, Interest, Account, Value, Overdraft, Checking, Date);
-					cust.getAll();
+					double Overdraft = reader.nextDouble();*/
+					//Checking newcheck = new Checking(Customer, Account, Value, Interest, sqlDate.toString(), Savings, "TMB", 0, true);
+					//newcheck.insertRecord(newcheck);
+					Checking newcheck = new Checking();
+					newcheck.getRecord(11);
 					break;
 				}
 				case 3:

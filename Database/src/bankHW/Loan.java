@@ -24,7 +24,6 @@
 
 package bankHW;
 
-import java.util.Date;
 import java.sql.*;
 import java.util.List;
 import java.util.ArrayList;
@@ -37,10 +36,10 @@ public class Loan {
 	public double Interest;
 	public double Monthly;
 	public double Total;
-	public Date NextDue;
+	public String NextDue;
 	public double CurrAmt;
 	public boolean Flag;
-	public Date LastFull;
+	public String LastFull;
 	SQLDriver db = new SQLDriver();
 	
 	public Loan()
@@ -57,7 +56,7 @@ public class Loan {
 		LastFull = null;
 	}
 	
-	public Loan(int Owner, int Loan, String LoanType, double Int, double Month, double Ttl, Date Next, double Current, boolean Flagged, Date Last)
+	public Loan(int Owner, int Loan, String LoanType, double Int, double Month, double Ttl, String Next, double Current, boolean Flagged, String Last)
 	{
 		OwnerID = Owner;
 		LoanID = Loan;
@@ -88,10 +87,10 @@ public class Loan {
 				myLoan.Interest = res.getDouble(4);
 				myLoan.Monthly = res.getDouble(5);
 				myLoan.Total = res.getDouble(6);
-				myLoan.NextDue = res.getDate(7);
+				myLoan.NextDue = res.getString(7);
 				myLoan.CurrAmt = res.getDouble(8);
 				myLoan.Flag = res.getBoolean(9);
-				myLoan.LastFull = res.getDate(10);
+				myLoan.LastFull = res.getString(10);
 				loanArray.add(myLoan);
 			}
 		}
@@ -104,13 +103,13 @@ public class Loan {
 	
 	public void addRecord(Loan newLoan)
 	{
-		String statement = "INSERT INTO loan VALUES ("+newLoan.OwnerID+","+newLoan.LoanID+","+newLoan.Type+","+newLoan.Interest+","+newLoan.Monthly+","+newLoan.Total+","+newLoan.NextDue+","+newLoan.CurrAmt+","+newLoan.Flag+","+newLoan.LastFull+");";
+		String statement = "INSERT INTO loan VALUES ("+newLoan.OwnerID+","+newLoan.LoanID+",\""+newLoan.Type+"\","+newLoan.Interest+","+newLoan.Monthly+","+newLoan.Total+",\""+newLoan.NextDue+"\","+newLoan.CurrAmt+","+newLoan.Flag+",\""+newLoan.LastFull+"\");";
 		db.insert(statement);
 	}
 	
 	public void updateRecord(Loan modLoan)
 	{
-		String statement = "UPDATE loan SET OwnerID="+modLoan.OwnerID+", LoanID = "+modLoan.LoanID+", Type = "+modLoan.Type+", Interest = "+modLoan.Interest+", Monthly = "+modLoan.Monthly+", Total = "+modLoan.Total+", NextDue = "+modLoan.NextDue+", CurrAmt = "+modLoan.CurrAmt+", Flag ="+modLoan.Flag+", LastFull ="+modLoan.LastFull+";";
+		String statement = "UPDATE loan SET OwnerID="+modLoan.OwnerID+", Type = \""+modLoan.Type+"\", Interest = "+modLoan.Interest+", Monthly = "+modLoan.Monthly+", TotalAmt = "+modLoan.Total+", NextDue = \""+modLoan.NextDue+"\", CurrAmt = "+modLoan.CurrAmt+", Flag ="+modLoan.Flag+", LastFull =\""+modLoan.LastFull+"\" WHERE LoanID = "+modLoan.LoanID+";";
 		db.insert(statement);
 	}
 }

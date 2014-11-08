@@ -22,7 +22,6 @@
 package bankHW;
 
 import java.sql.*;
-import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -32,9 +31,9 @@ public class CD {
 	public int DepositID;
 	public double Balance;
 	public double Interest;
-	public Date Maturity;
-	public Date Opened;
-	public Date Rollover;
+	public String Maturity;
+	public String Opened;
+	public String Rollover;
 	public String Penalty;
 	SQLDriver db = new SQLDriver();
 	
@@ -50,7 +49,7 @@ public class CD {
 		Penalty = "";
 	}
 	
-	public CD (int Owner, int Deposit, double Bal, double Int, Date Mat, Date Open, Date Roll, String Pen)
+	public CD (int Owner, int Deposit, double Bal, double Int, String Mat, String Open, String Roll, String Pen)
 	{
 		OwnerID = Owner;
 		DepositID = Deposit;
@@ -64,7 +63,7 @@ public class CD {
 	
 	public void addRecord(CD newCD)
 	{
-		String statement = "INSERT INTO cd VALUES ("+newCD.OwnerID+","+newCD.DepositID+","+newCD.Balance+","+newCD.Interest+","+newCD.Maturity+","+newCD.Opened+","+newCD.Rollover+","+newCD.Penalty+");";
+		String statement = "INSERT INTO cd VALUES ("+newCD.OwnerID+","+newCD.DepositID+","+newCD.Balance+","+newCD.Interest+",\""+newCD.Maturity+"\",\""+newCD.Opened+"\",\""+newCD.Rollover+"\",\""+newCD.Penalty+"\");";
 		db.insert(statement);
 	}
 	
@@ -83,9 +82,9 @@ public class CD {
 				newCD.DepositID = res.getInt(2);
 				newCD.Balance = res.getDouble(3);
 				newCD.Interest = res.getDouble(4);
-				newCD.Maturity = res.getDate(5);
-				newCD.Opened = res.getDate(6);
-				newCD.Rollover = res.getDate(7);
+				newCD.Maturity = res.getString(5);
+				newCD.Opened = res.getString(6);
+				newCD.Rollover = res.getString(7);
 				newCD.Penalty = res.getString(8);
 				cdArray.add(newCD);
 			}

@@ -28,7 +28,6 @@
 package bankHW;
 
 import java.sql.*;
-import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -38,7 +37,7 @@ public class Checking {
 	public int AcctID;
 	public double Balance;
 	public double Interest;
-	public Date Opened;
+	public String Opened;
 	public int SavingsAcct;
 	public String Type;
 	public double AvgBal;
@@ -59,7 +58,7 @@ public class Checking {
 		Active = true;
 	}
 	
-	public Checking(int Owner, int Account, double Bal, double Int, Date Open, int Savings, String AcctType, double Average, boolean ActiveAcct)
+	public Checking(int Owner, int Account, double Bal, double Int, String Open, int Savings, String AcctType, double Average, boolean ActiveAcct)
 	{
 		OwnerID = Owner;
 		AcctID = Account;
@@ -74,12 +73,13 @@ public class Checking {
 	
 	public Checking getRecord(int Account)
 	{
-		String statement = "SELECT * FROM checking WHERE AcctID = "+Account;
+		String statement = "SELECT * FROM checking WHERE AcctID = "+Account+";";
+		System.out.println(statement);
 		ResultSet res = (ResultSet)db.select(statement);
 		Checking check;
 		try
 		{
-			check = new Checking(res.getInt(1), res.getInt(2), res.getDouble(3), res.getDouble(4), res.getDate(5), res.getInt(6), res.getString(7), res.getDouble(8), res.getBoolean(9));
+			check = new Checking(res.getInt(1), res.getInt(2), res.getDouble(3), res.getDouble(4), res.getString(5), res.getInt(6), res.getString(7), res.getDouble(8), res.getBoolean(9));
 			return check;
 		}
 		catch(Exception ex)
@@ -111,7 +111,7 @@ public class Checking {
 				check.AcctID = res.getInt(2);
 				check.Balance = res.getDouble(3);
 				check.Interest = res.getDouble(4);
-				check.Opened = res.getDate(5);
+				check.Opened = res.getString(5);
 				check.SavingsAcct = res.getInt(6);
 				check.Type = res.getString(7);
 				check.AvgBal = res.getDouble(8);
@@ -128,7 +128,8 @@ public class Checking {
 	
 	public void insertRecord(Checking newCheck)
 	{
-		String statement = "INSERT INTO checking VALUES ("+newCheck.OwnerID+","+newCheck.AcctID+","+newCheck.Balance+","+newCheck.Interest+","+newCheck.Opened+","+newCheck.SavingsAcct+",\""+newCheck.Type+"\","+newCheck.AvgBal+","+newCheck.Active+");";
+		String statement = "INSERT INTO checking VALUES ("+newCheck.OwnerID+","+newCheck.AcctID+","+newCheck.Balance+","+newCheck.Interest+",\""+newCheck.Opened.toString()+"\","+newCheck.SavingsAcct+",\""+newCheck.Type+"\","+newCheck.AvgBal+","+newCheck.Active+");";
+		System.out.println(statement);
 		db.insert(statement);
 	}
 	
