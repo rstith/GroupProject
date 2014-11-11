@@ -1,8 +1,8 @@
 package bankHW
 import java.util*;
 
-public class Employee implements Person {
+public class Employee extends Person {
 
-
+	
 
 }//End class Person
