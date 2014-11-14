@@ -6,10 +6,8 @@
   <property environment="env"/>
   <property name="target" value="1.8"/>
   <property name="source" value="1.8"/>
-  <path id="JavaFX SDK.libraryclasspath"/>
   <path id="Banking System.classpath">
 	<pathelement location="."/>
-        <path refid="JavaFX SDK.libraryclasspath"/>
   </path>
   <!-- End Eclipse Added Properties -->
 
@@ -18,19 +16,6 @@
   <property name="src.dir" location="src" />
   <property name="build.dir" location="bin" />
   <property name="dist.dir" location="dist" />
-
-<!-- Start Eclipse Added Target -->
-    <target name="init">
-        <copy includeemptydirs="false" todir=".">
-            <fileset dir=".">
-                <exclude name="**/*.launch"/>
-                <exclude name="**/*.xtend"/>
-                <exclude name="**/*.java"/>
-            </fileset>
-        </copy>
-    </target>
-<!-- End Eclipse Added Target -->
-
 
   <!-- Deletes the existing build, docs and dist directory-->
   <target name="clean">
