@@ -1,5 +1,5 @@
 bin/
-build.xml
+/BankingSystemNB/build.xml
 dist/
 /BankingSystemNB/nbproject/private/
 /BankingSystemNB/build/
