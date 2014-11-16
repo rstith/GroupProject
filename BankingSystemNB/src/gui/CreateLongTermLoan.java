@@ -1,12 +1,5 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package gui;
-/**
- *
- * @author Joel Jacobsen
- */
+
 public class CreateLongTermLoan extends javax.swing.JFrame {
 
     /**
@@ -81,6 +74,11 @@ public class CreateLongTermLoan extends javax.swing.JFrame {
 
         jButton1.setText("Create Loan");
         jButton1.setToolTipText("Create Loan");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jTextField1.setToolTipText("Customer ID");
 
@@ -90,6 +88,11 @@ public class CreateLongTermLoan extends javax.swing.JFrame {
 
         jButton7.setText("Back");
         jButton7.setToolTipText("Return to Previous Screen");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -187,6 +190,20 @@ public class CreateLongTermLoan extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        dispose();
+        ManagerActionScreen mas = new ManagerActionScreen();
+        mas.setResizable(false);
+        mas.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        dispose();
+        ManagerActionScreen mas = new ManagerActionScreen();
+        mas.setResizable(false);
+        mas.setVisible(true);
+    }//GEN-LAST:event_jButton7ActionPerformed
 
     /**
      * @param args the command line arguments

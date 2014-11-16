@@ -1,12 +1,5 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package gui;
-/**
- *
- * @author Joel Jacobsen
- */
+
 public class SwipeCreditCard extends javax.swing.JFrame {
 
     /**
@@ -154,9 +147,9 @@ public class SwipeCreditCard extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         dispose();
-        CustomerOptions co = new CustomerOptions();
-        co.setResizable(false);
-        co.setVisible(true);
+        SelectCustomerOption sco = new SelectCustomerOption();
+        sco.setResizable(false);
+        sco.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
