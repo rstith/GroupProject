@@ -1,4 +1,6 @@
 /BankingSystemNB/nbproject/private/
 /BankingSystemNB/bin/
 /BankingSystemNB/dist/
-/BankingSystemNB/build.xml
+/BankingSystemNB/build/
+build.xml
+.DS_Store
