@@ -1,4 +1,4 @@
 People Class
 ============
 
-[People Class Diagram](Documents/Images/People.png)
+[People Class Diagram](GroupProject/Documents/Images/People.png)
