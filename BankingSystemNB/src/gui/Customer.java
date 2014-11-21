@@ -113,7 +113,7 @@ public class Customer extends javax.swing.JFrame {
         if (customerID.equals("")){
             jLabel3.setText("Enter Customer ID");
         }else{
-            System.out.print(customerID);
+            System.out.println(customerID);
             
             /*
                 There should be code to search the database here.

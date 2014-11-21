@@ -35,6 +35,7 @@ public class CreditCardPayment extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -101,7 +102,10 @@ public class CreditCardPayment extends javax.swing.JFrame {
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                             .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                            .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(306, 306, 306)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 266, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -120,7 +124,9 @@ public class CreditCardPayment extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 102, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(53, 53, 53)
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -138,10 +144,33 @@ public class CreditCardPayment extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        dispose();
-        BankingSystemMainScreen bsms = new BankingSystemMainScreen();
-        bsms.setResizable(false);
-        bsms.setVisible(true);
+        String inDay   = jComboBox2.getSelectedItem().toString();
+        String inMonth = jComboBox3.getSelectedItem().toString();
+        String inYear  = jComboBox4.getSelectedItem().toString();
+        String amount = jTextField1.getText();
+        
+        if (inDay.equals("")){
+            jLabel4.setText("Enter ALL Text");
+        }else if(inMonth.equals("")){
+            jLabel4.setText("Enter ALL Text");
+        }else if(inMonth.equals("")){
+            jLabel4.setText("Enter ALL Text");
+        }else if(amount.equals("")){
+            jLabel4.setText("Enter ALL Text");
+        }else{
+            System.out.print(inDay + "/");
+            System.out.print(inMonth + "/");
+            System.out.print(inYear + "/");
+            System.out.print(": $" + amount + "\n");
+            /*
+                Again, this needs to push to the database instead. 
+            */
+
+            dispose();
+            BankingSystemMainScreen bsms = new BankingSystemMainScreen();
+            bsms.setResizable(false);
+            bsms.setVisible(true);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -187,6 +216,7 @@ public class CreditCardPayment extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }
