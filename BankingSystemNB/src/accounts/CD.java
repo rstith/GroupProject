@@ -33,6 +33,13 @@ public class CD extends Savings
         rollOverYear = sryear;
     }
     
+    public Date getRollOverDate()
+    {
+        
+        Date rollOverDate = new Date(rollOverYear, rollOverMonth, rollOverDay); //DATE OF ROLLOVER
+        return rollOverDate;
+    }
+    
     public void setActive(int act)
     {
         active = act;
@@ -69,7 +76,7 @@ public class CD extends Savings
         System.out.println(rollOverDate1.toString());
         System.out.println(currentDate.toString());
         
-        //Check if the date is within the limit for withdrawing a CD
+        //Check if the current date is within the limit for withdrawing a CD
         if(currentDate.after(rollOverDate2) && currentDate.before(rollOverDate1)) 
         {
                 System.out.println("Within Roll Over Date");

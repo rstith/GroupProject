@@ -1,5 +1,6 @@
 package accounts;
 
+
 /**
  *
  * @author Nic
@@ -52,6 +53,26 @@ public class GoldDiamond extends Checking
         else
         {
             active = 0;
+        }
+    }
+    
+    @Override
+    /*
+     * Debit needs to account for an active GOLD/DIAMOND
+     */
+    public void debit(double amount)
+    {
+        if(amount <= accountTotal)
+        {
+            accountTotal -= amount;
+            if(accountTotal <= ACTIVE_AMOUNT)
+            {
+                active = 0;
+            }
+        }
+        else
+        {
+            System.out.println("NOT ENOUGH FUNDS"); 
         }
     }
 }

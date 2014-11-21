@@ -23,7 +23,14 @@ public class Checking extends Account
     
     public void debit(double amount)
     {
-        accountTotal -= amount;
+        if(amount <= accountTotal)
+        {
+            accountTotal -= amount;
+        }
+        else
+        {
+            System.out.println("NOT ENOUGH FUNDS"); 
+        }
     }
     
     public Savings getLinkedAccount()
@@ -65,15 +72,5 @@ public class Checking extends Account
         
         return transferTo.getAccountTotal();
     }
-    
-    /*MIGHT NOT HAVE TO IMPLEMENT
-    public void createCheck(int checkNumber, double checkAmount, int checkD, int checkM, int checkY)
-    {
-        checkNO = checkNumber;
-        checkAmt = checkAmount;
-        checkDay = checkD;
-        checkM = checkM;
-        checkY = checkY;
-    }
-    */
 }
+

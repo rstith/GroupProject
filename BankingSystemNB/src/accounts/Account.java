@@ -12,6 +12,7 @@ public class Account
     protected int month;
     protected int year;
     protected double accountTotal;
+    protected int accountOpen = 1; //0 is a closed account, 1 is an open account
     
     public Account(int accNum, int custID)
     {
