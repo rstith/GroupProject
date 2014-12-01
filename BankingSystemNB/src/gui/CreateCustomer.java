@@ -220,7 +220,8 @@ public class CreateCustomer extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
-        String customerID = jTextField5.getText(); //This should pull from the database.  
+        String customerIDString = jTextField5.getText(); //This should pull from the database.
+        int    customerID = Integer.parseInt(customerIDString);
         String customerFirstName = jTextField4.getText();
         String customerLastName = jTextField3.getText();
         String customerSSN = jTextField2.getText();
@@ -229,7 +230,7 @@ public class CreateCustomer extends javax.swing.JFrame {
         String customerState = jTextField7.getText();
         String customerZipCode = jTextField8.getText();
         
-        if (customerID.equals("")){
+        if (customerIDString.equals("")){
             jLabel10.setText("Enter ALL Text");
         }else if(customerFirstName.equals("")){
             jLabel10.setText("Enter ALL Text");
@@ -249,7 +250,7 @@ public class CreateCustomer extends javax.swing.JFrame {
             Customer newCust = new Customer(customerID, customerFirstName, customerLastName, 
                     customerSSN, customerStreetAddress, customerCity, customerState, 
                     customerZipCode);
-            newCust.print();
+            newCust.add();
             /*
                 There should be code to move the customer to the database here.
                 After the button has been activated but before screen is closed.

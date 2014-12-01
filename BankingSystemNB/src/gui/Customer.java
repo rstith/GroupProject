@@ -2,6 +2,9 @@ package gui;
 
 public class Customer extends javax.swing.JFrame {
 
+    //Global Variables
+    public static people.Customer testCustomer= new people.Customer();
+    
     /**
      * Creates new form Customer
      */
@@ -108,19 +111,16 @@ public class Customer extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String customerID = jTextField1.getText();
+        String customerIDString = jTextField1.getText();
+        int    customerID = Integer.parseInt(customerIDString);
+        people.Customer searchCustomer = new people.Customer();
         
-        if (customerID.equals("")){
+        if (customerIDString.equals("")){
             jLabel3.setText("Enter Customer ID");
         }else{
-            System.out.println(customerID);
             
-            /*
-                There should be code to search the database here.
-                After the button has been activated but before screen is closed.
-            
-                There has to be a way to store the number, on the way to the next frame, here.
-            */
+            searchCustomer.search(customerID);
+            testCustomer = searchCustomer;
             
             dispose();
             SelectCustomerOption co = new SelectCustomerOption();
