@@ -6,7 +6,7 @@ public class Manager extends Employee {
 	
 	}
 	
-	public Manager(String ID, String firstName, String lastName, String SSN, String streetAddress, String city, String state, String zipCode){
+	public Manager(int ID, String firstName, String lastName, String SSN, String streetAddress, String city, String state, String zipCode){
 		super(ID, firstName, lastName, SSN, streetAddress, city, state, zipCode);
 	}
 

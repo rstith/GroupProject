@@ -5,7 +5,7 @@ public abstract class People{
 	//Abstract Methods
 	//There is no constructor in an abstract class.
 
-	public abstract String getID(); 
+	public abstract int    getID(); 
 	public abstract String getFirstName();
 	public abstract String getLastName();
 	public abstract String getSSNumber();
