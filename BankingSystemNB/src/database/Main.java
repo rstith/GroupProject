@@ -151,6 +151,12 @@ public class Main {
 					String Last = reader.next();
 					//db.updateCustomer(custAcct, First, Last);
 				}
+				case 6: 
+				{
+				//	MetaData metadata = db.getMetaData();
+				//	metadata.getTables(null, null, null, new String[]{"TABLE"});
+					
+				}
 				}
 
 			}

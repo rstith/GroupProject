@@ -1,6 +1,13 @@
+You can connect to the database, through your terminal using the following code:
+
+`mysql -h 162.226.167.3 -P 3306 -u testuser -p BankHW`
+
+You must enter the password `password`, when prompted.
+
 bankHW = database
 
-* Should change the package from `bankHW` to`database` in for clarity.
+* Should change the package from `bankHW` to `database` for clarity.
+
 
 Create the MySQL Database
 
@@ -14,22 +21,22 @@ CREATE TABLE customer
 );
 
 CREATE TABLE savings(
-  AcctID	 int(10) NOT NULL,
-  Interest  	 decimal(4,2) NOT NULL,
-  Balance  	 decimal(12,2) NOT NULL,
-  Overdraft	 decimal(5,2) NOT NULL,
-  Opened	 date,
-  Active	 boolean,
-  Owner		 int(10) NOT NULL,
+  AcctID	  int(10) NOT NULL,
+  Interest    decimal(4,2) NOT NULL,
+  Balance  	  decimal(12,2) NOT NULL,
+  Overdraft	  decimal(5,2) NOT NULL,
+  Opened	  date,
+  Active	  boolean,
+  Owner		  int(10) NOT NULL,
   PRIMARY KEY (AcctID),
   FOREIGN KEY (Owner) REFERENCES customer(CustID)
 );
 
 CREATE TABLE savingsrecord(
   TransactionID	 int(10) NOT NULL,
-  Date		 date,
+  Date		     date,
   Description	 varchar(256) NOT NULL,
-  Amount	 decimal(10,2) NOT NULL,
+  Amount	     decimal(10,2) NOT NULL,
   Account	 int(10) NOT NULL,
   PRIMARY KEY (TransactionID),
   FOREIGN KEY (Account) REFERENCES savings(AcctID)
