@@ -125,17 +125,25 @@ public class ManagerScreen extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
-        String customerID = jTextField1.getText();
+        String customerIDString = jTextField1.getText();
         
-        if (customerID.equals("")){
+        if (customerIDString.equals("")){
             jLabel3.setText("Enter ALL Text");
         }else{
-            System.out.println(customerID);
-            /*
-                This code should be pulling the customer from the database, using "customer.search(customerID);".
-            */
+            int customerID = Integer.parseInt(customerIDString);
+            people.Customer searchCustomer = new people.Customer();
+            searchCustomer.search(customerID);
+            
             dispose();
             ManagerActionScreen mas = new ManagerActionScreen();
+            ManagerActionScreen.jLabel10.setText(customerIDString);
+            ManagerActionScreen.jLabel11.setText(searchCustomer.getFirstName());
+            ManagerActionScreen.jLabel12.setText(searchCustomer.getLastName());
+            ManagerActionScreen.jLabel13.setText(searchCustomer.getSSNumber());
+            ManagerActionScreen.jLabel14.setText(searchCustomer.getStreetAddress());
+            ManagerActionScreen.jLabel15.setText(searchCustomer.getCity());
+            ManagerActionScreen.jLabel17.setText(searchCustomer.getState());
+            ManagerActionScreen.jLabel16.setText(searchCustomer.getZipCode());
             mas.setResizable(false);
             mas.setVisible(true);
         }

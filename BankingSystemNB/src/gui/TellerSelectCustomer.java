@@ -107,18 +107,25 @@ public class TellerSelectCustomer extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
-        String customerID = jTextField1.getText();
-        
-        if (customerID.equals("")){
+        String customerIDString = jTextField1.getText();
+                
+        if (customerIDString.equals("")){
             jLabel3.setText("Enter ALL Text");
         }else{
-            System.out.println(customerID);
-            /*
-                This code should be pulling the customer from the database, using "customer.search(customerID);".
-            */
+            int customerID = Integer.parseInt(customerIDString);
+            people.Customer searchCustomer = new people.Customer();
+            searchCustomer.search(customerID);
+            
             dispose();
             TellerActionScreen tas = new TellerActionScreen();
+            TellerActionScreen.jLabel10.setText(customerIDString);
+            TellerActionScreen.jLabel11.setText(searchCustomer.getFirstName());
+            TellerActionScreen.jLabel12.setText(searchCustomer.getLastName());
+            TellerActionScreen.jLabel13.setText(searchCustomer.getSSNumber());
+            TellerActionScreen.jLabel17.setText(searchCustomer.getStreetAddress());
+            TellerActionScreen.jLabel16.setText(searchCustomer.getCity());
+            TellerActionScreen.jLabel15.setText(searchCustomer.getState());
+            TellerActionScreen.jLabel14.setText(searchCustomer.getZipCode());
             tas.setResizable(false);
             tas.setVisible(true);
         }

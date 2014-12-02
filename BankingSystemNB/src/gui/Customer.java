@@ -112,18 +112,24 @@ public class Customer extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String customerIDString = jTextField1.getText();
-        int    customerID = Integer.parseInt(customerIDString);
-        people.Customer searchCustomer = new people.Customer();
         
         if (customerIDString.equals("")){
             jLabel3.setText("Enter Customer ID");
         }else{
-            
+            int customerID = Integer.parseInt(customerIDString);
+            people.Customer searchCustomer = new people.Customer();
             searchCustomer.search(customerID);
-            testCustomer = searchCustomer;
             
             dispose();
             SelectCustomerOption co = new SelectCustomerOption();
+            SelectCustomerOption.jLabel3.setText(customerIDString);
+            SelectCustomerOption.jLabel6.setText(searchCustomer.getFirstName());
+            SelectCustomerOption.jLabel7.setText(searchCustomer.getLastName());
+            SelectCustomerOption.jLabel9.setText(searchCustomer.getSSNumber());
+            SelectCustomerOption.jLabel11.setText(searchCustomer.getStreetAddress());
+            SelectCustomerOption.jLabel12.setText(searchCustomer.getCity());
+            SelectCustomerOption.jLabel15.setText(searchCustomer.getState());
+            SelectCustomerOption.jLabel17.setText(searchCustomer.getZipCode());
             co.setResizable(false);
             co.setVisible(true);
         }
