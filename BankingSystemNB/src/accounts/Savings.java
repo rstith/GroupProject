@@ -11,10 +11,16 @@ public class Savings extends Account
     protected double interestRate = 0.0;
     protected double interestAccrued = 0.0;
     protected int savingsType;//0 for CD, 1 for simpleSavings
+    protected int day;
+    protected int month;
+    protected int year;
     
-    public Savings(int accNum, int custID, double accTot, String accType)
+    public Savings(int accNum, int custID, double accTot, String accType, int day, int month, int year)
     {
         super(accNum, custID, accTot, accType);
+        this.day = day;
+        this.month = month;
+        this.year = year;
     }
     
     public void setInterestRate(double rate)
@@ -58,13 +64,12 @@ public class Savings extends Account
         
     public void add(){
         /*
-         * 1. USING JUST CURRENT DATE, NEEDS TO BE CHANGED TO SELECTED DATE
          * 2. HARD CODED OVERDRAFT AMOUNT
          * 3. HARD CODED ACTIVE STATUS TO 1
          * 4. INTEREST RATE HARD CODED TO 0.0
          */
-                java.util.Date utilDate = new java.util.Date();
-                java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+                java.util.Date utilDate = new java.util.Date(year, month, day);//FOR JAVA DATES
+                java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());//CONVERT TO SQL DATES
 		String statement = "INSERT INTO "+databaseCallTableName+" VALUES ('"+this.accountNumber+"','"+this.interestRate+"',"+this.accountTotal+",'"+"100"+"','"+sqlDate+"','"+"1"+"','"+this.customerID+"');";
 		db.insert(statement);
 	}

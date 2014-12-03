@@ -181,13 +181,25 @@ public class CreateSavingsAccount extends javax.swing.JFrame {
         String depositString = jTextField3.getText(); //This should pull from the database.
         double    deposit = Double.parseDouble(depositString);
         
+        String monthString = (String)jComboBox2.getSelectedItem();   
+        String dayString = (String)jComboBox2.getSelectedItem();   
+        String yearString = (String)jComboBox2.getSelectedItem();   
+        
+        int month = Integer.parseInt(monthString);
+        int day = Integer.parseInt(dayString);
+        int year = Integer.parseInt(yearString);
+        
         if (accountIDString.equals("")){
             jLabel10.setText("Enter ALL Text");
         }else if(depositString.equals("")){
             jLabel10.setText("Enter ALL Text");
         }
         else{
-            Savings newSavings = new Savings(accountID, 2, deposit, "savings");//SAVINGS HARD CODED
+            /*
+             * 1. customerID IS HARDCODED TO 2. NEED A FIELD TO INPUT OR PASS FROM PREVIOUS SCREEN
+             * 2. HARD CODED savings AS ACCOUNT TYPE
+             */
+            Savings newSavings = new Savings(accountID, 2, deposit, "savings", day, month, year);//SAVINGS HARD CODED
             newSavings.add();
         }
         
