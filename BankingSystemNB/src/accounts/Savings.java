@@ -55,4 +55,17 @@ public class Savings extends Account
 		}
 		return this;
         } 
+        
+    public void add(){
+        /*
+         * 1. USING JUST CURRENT DATE, NEEDS TO BE CHANGED TO SELECTED DATE
+         * 2. HARD CODED OVERDRAFT AMOUNT
+         * 3. HARD CODED ACTIVE STATUS TO 1
+         * 4. INTEREST RATE HARD CODED TO 0.0
+         */
+                java.util.Date utilDate = new java.util.Date();
+                java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+		String statement = "INSERT INTO "+databaseCallTableName+" VALUES ('"+this.accountNumber+"','"+this.interestRate+"',"+this.accountTotal+",'"+"100"+"','"+sqlDate+"','"+"1"+"','"+this.customerID+"');";
+		db.insert(statement);
+	}
 }

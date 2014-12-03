@@ -9,9 +9,9 @@ public class ThatsMyBank extends Checking
     private double monthlyPaymentsFee = 0.75;
     private double transferFee = 0.50;
     
-    public ThatsMyBank(int accNum, int custID, double accTot, String accType)
+    public ThatsMyBank(int accNum, int custID, double accTot, String accType, String checkingType)
     {
-        super(accNum, custID, accTot, accType);
+        super(accNum, custID, accTot, accType, checkingType);
     }
     
     @Override

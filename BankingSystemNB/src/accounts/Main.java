@@ -20,7 +20,7 @@ public class Main
         
         Savings savings1 = new Savings(1, 1, 5000, "savings");
         savings1.credit(900);
-        Checking checking1 = new Checking(1, 1, 1000, "checking");
+        Checking checking1 = new Checking(1, 1, 1000, "checking", "simple");
         
         savings1.credit(checking1.transferFunds(500, savings1));
         

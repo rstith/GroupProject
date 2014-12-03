@@ -16,10 +16,13 @@ public class Checking extends Account
     protected double checkAmt;
     protected int checkNO;
     protected int checkDay, checkMonth, checkYear;
+    protected boolean opened = true;
+    protected String checkingType;
     
-    public Checking(int accNum, int custID, double accTot, String accType)
+    public Checking(int accNum, int custID, double accTot, String accType, String checkingType)
     {
         super(accNum, custID, accTot, accType);
+        this.checkingType = checkingType;
     }
     
     public void debit(double amount)
@@ -87,5 +90,12 @@ public class Checking extends Account
 		}
 		return this;
         } 
+    
+    public void add(){
+                java.util.Date utilDate = new java.util.Date();
+                java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+		String statement = "INSERT INTO "+databaseCallTableName+" VALUES ('"+this.customerID+"','"+this.accountNumber+"',"+this.accountTotal+",'"+"0.0"+"','"+sqlDate+"','"+"1"+"','"+this.checkingType+"','"+"0.0"+"','"+"1"+"');";
+		db.insert(statement);
+	}
 }
 
