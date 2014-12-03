@@ -7,9 +7,9 @@ package accounts;
 public class MortgageLoans extends Loans
 {    
     int loanLength; //MUST BE 15 or 20. LENGHT IN YEARS
-    public MortgageLoans(int accNum, int custID, double accTot, double mpay, int length)
+    public MortgageLoans(int accNum, int custID, double accTot, String accType, double mpay, int length)
     {
-        super(accNum, custID, accTot, mpay);
+        super(accNum, custID, accTot, accType, mpay);
         loanLength = length;
     }   
     

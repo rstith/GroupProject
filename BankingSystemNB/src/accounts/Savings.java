@@ -10,9 +10,9 @@ public class Savings extends Account
     protected double interestAccrued = 0.0;
     protected int savingsType;//0 for CD, 1 for simpleSavings
     
-    public Savings(int accNum, int custID)
+    public Savings(int accNum, int custID, double accTot, String accType)
     {
-        super(accNum, custID);
+        super(accNum, custID, accTot, accType);
     }
     
     public void setInterestRate(double rate)

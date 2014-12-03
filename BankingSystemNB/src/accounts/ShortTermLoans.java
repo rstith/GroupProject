@@ -7,9 +7,9 @@ package accounts;
 public class ShortTermLoans extends Loans
 {
     int loanLength; //MUST BE 10 OR UNDER. LENGHT IN YEARS
-    public ShortTermLoans(int accNum, int custID, double accTot, double mpay, int length)
+    public ShortTermLoans(int accNum, int custID, double accTot, String accType, double mpay, int length)
     {
-        super(accNum, custID, accTot, mpay);
+        super(accNum, custID, accTot, accType, mpay);
         loanLength = length;
     }   
     

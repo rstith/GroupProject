@@ -1,5 +1,7 @@
 package accounts;
 
+import java.sql.ResultSet;
+
 /**
  *
  * @author Nic
@@ -8,17 +10,16 @@ public class Checking extends Account
 {
     protected double stopPaymentFee = 15.00;
     protected double overdraftFee = 20.00;
-    protected Savings linkedAccount;
+    protected String linkedAccount;
     protected int overdraftProtection;//0 for none, 1 for yes
     
     protected double checkAmt;
     protected int checkNO;
     protected int checkDay, checkMonth, checkYear;
     
-    public Checking(int accNum, int custID, double accTot)
+    public Checking(int accNum, int custID, double accTot, String accType)
     {
-        super(accNum, custID);
-        accountTotal = accTot;
+        super(accNum, custID, accTot, accType);
     }
     
     public void debit(double amount)
@@ -33,7 +34,7 @@ public class Checking extends Account
         }
     }
     
-    public Savings getLinkedAccount()
+    public String getLinkedAccount()
     {
         return linkedAccount;
     }
@@ -41,11 +42,6 @@ public class Checking extends Account
     public void overdraftCharge()
     {
         accountTotal -= overdraftFee;
-    }
-    
-    public void linkAccount(Savings linkedSavings)
-    {
-        linkedAccount = linkedSavings;
     }
     
     public double transferFunds(double transferAmount, Account transferTo)
@@ -72,5 +68,23 @@ public class Checking extends Account
         
         return transferTo.getAccountTotal();
     }
+    
+    @Override
+    public Account search(int findID){
+                String statement = "SELECT * FROM " + databaseCallTableName + " WHERE " + databaseCallAccountNumber + " = " + findID;
+
+                try{
+			ResultSet res = (ResultSet)db.select(statement);
+			while (res.next()){
+                            this.accountNumber = res.getInt("accountID");
+                            this.accountTotal = res.getDouble("value");
+                            this.linkedAccount = res.getString("SavingsAcc");
+                            
+			}
+		}catch (Exception ex){
+			ex.printStackTrace();
+		}
+		return this;
+        } 
 }
 

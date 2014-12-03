@@ -6,9 +6,9 @@ package accounts;
  */
 public class SimpleSavings extends Savings
 {
-    public SimpleSavings(int accNum, int custID)
+    public SimpleSavings(int accNum, int custID, double accTot, String accType)
     {
-        super(accNum, custID);
+        super(accNum, custID, accTot, accType);
     }
     
     public void deposit(double amount)

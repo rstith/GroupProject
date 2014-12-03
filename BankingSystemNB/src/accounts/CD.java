@@ -16,14 +16,13 @@ public class CD extends Savings
     private int TIME_FRAME = 15;//Days before roll over date to withdraw
     private double penalty = 50.00;//Fee for withdrawing before end date
     
-    public CD(int accNum, int custID, int length, int rday, int rmonth, int ryear, double amount)
+    public CD(int accNum, int custID, String accType, int length, int rday, int rmonth, int ryear, double amount)
     {
-        super(accNum, custID);
+        super(accNum, custID, amount, accType);
         CDlength = length;
         rollOverDay = rday;
         rollOverMonth = rmonth;
         rollOverYear = ryear;
-        accountTotal = amount;
     }
     
     public void setRollOverDate(int srday, int srmonth, int sryear)

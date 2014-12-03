@@ -13,9 +13,9 @@ public class GoldDiamond extends Checking
     private int active;//0 is not active, 1 is active
     
     
-    public GoldDiamond(int accNum, int custID, double accTot)
+    public GoldDiamond(int accNum, int custID, double accTot, String accType)
     {
-        super(accNum, custID, accTot);
+        super(accNum, custID, accTot, accType);
     }
     
     public Account transferFundsInactive(double transferAmount, Account transferTo)

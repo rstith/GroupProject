@@ -1,5 +1,8 @@
 package accounts;
 
+import database.SQLDriver;
+import java.sql.ResultSet;
+
 /**
  *
  * @author Nic
@@ -13,11 +16,19 @@ public class Account
     protected int year;
     protected double accountTotal;
     protected int accountOpen = 1; //0 is a closed account, 1 is an open account
+    protected SQLDriver db = new SQLDriver();
+    protected String accountType;
+    protected String databaseCallTableName;
+    protected String databaseCallAccountNumber;
     
-    public Account(int accNum, int custID)
+    public Account(int accNum, int custID, double accountTotal, String accountType)
     {
         accountNumber = accNum;
         customerID = custID;
+        this.accountTotal = accountTotal;
+        
+        databaseCallTableName = accountType;
+        databaseCallAccountNumber = Integer.toString(accNum);
     }
     
     public int getAccountNumber()
@@ -69,4 +80,18 @@ public class Account
     {
         accountTotal += amount;
     }
+    
+    public Account search(int findID){
+                String statement = "SELECT * FROM " + databaseCallTableName + " WHERE " + databaseCallAccountNumber + " = " + findID;
+
+                try{
+			ResultSet res = (ResultSet)db.select(statement);
+			while (res.next()){
+                            this.accountNumber = res.getInt("accountID");
+			}
+		}catch (Exception ex){
+			ex.printStackTrace();
+		}
+		return this;
+        } 
 }

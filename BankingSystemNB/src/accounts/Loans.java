@@ -17,10 +17,9 @@ public class Loans extends Account
     protected int paymentOverdue = 0; //0 for no, 1 for yes
     protected int paymentIncomplete = 0;//0 for no, 1 for yes
     
-    public Loans(int accNum, int custID, double accTot, double mpay)
+    public Loans(int accNum, int custID, double accTot, String accType, double mpay)
     {
-        super(accNum, custID);
-        accountTotal = accTot;
+        super(accNum, custID, accTot, accType);
         MONTHLY_PAYMENT = mpay;
         paymentLeft = mpay;
     }
