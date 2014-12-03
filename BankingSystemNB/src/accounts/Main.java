@@ -29,7 +29,7 @@ public class Main
       
         System.out.println();
         
-        Loans loan1 = new Loans(1, 1, 2000.0, "loan",  100);
+        Loans loan1 = new Loans(1, 1, 2000.0, "loan",  100, 0.15);
         loan1.setPaymentDate(12, 10, 114);
         loan1.makePayment(25);
         loan1.makePayment(27);

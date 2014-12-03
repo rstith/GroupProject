@@ -1,5 +1,7 @@
 package accounts;
 
+import java.sql.ResultSet;
+
 /**
  *
  * @author Nic
@@ -34,4 +36,23 @@ public class Savings extends Account
     {
         interestAccrued = accountTotal * interestRate;
     }
+    
+        @Override
+    public Account search(int findID){
+                String statement = "SELECT * FROM " + databaseCallTableName + " WHERE " + databaseCallAccountNumber + " = " + findID;
+
+                try{
+			ResultSet res = (ResultSet)db.select(statement);
+			while (res.next()){
+                            this.accountNumber = res.getInt("accountID");
+                            this.accountTotal = res.getDouble("balance");
+                            this.accountOpen = res.getInt("Active");
+                            this.interestRate = res.getDouble("Interest");
+                            
+			}
+		}catch (Exception ex){
+			ex.printStackTrace();
+		}
+		return this;
+        } 
 }

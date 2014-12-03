@@ -1,5 +1,6 @@
 package accounts;
 
+import java.sql.ResultSet;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
@@ -11,15 +12,19 @@ import java.util.TimeZone;
 public class Loans extends Account
 {
     protected double MONTHLY_PAYMENT;
+    protected double interestRate;
     protected double paymentLeft;//payment amount still needed to be made for the month
     protected int paymentDay, paymentMonth, paymentYear;
     protected int daySince, monthSince, yearSince;//Date for payment since
     protected int paymentOverdue = 0; //0 for no, 1 for yes
     protected int paymentIncomplete = 0;//0 for no, 1 for yes
+    protected double amountLeftInLoan;
     
-    public Loans(int accNum, int custID, double accTot, String accType, double mpay)
+    public Loans(int accNum, int custID, double accTot, String accType, double mpay, double interestRate)
     {
         super(accNum, custID, accTot, accType);
+        this.interestRate = interestRate;
+        amountLeftInLoan = accTot;
         MONTHLY_PAYMENT = mpay;
         paymentLeft = mpay;
     }
@@ -63,11 +68,11 @@ public class Loans extends Account
         if(amount >= paymentLeft)
         {
             paymentLeft = 0;
-            accountTotal -= amount;
+            amountLeftInLoan -= amount;
             paymentIncomplete = 0;
             paymentOverdue = 0;
             System.out.println("You paid: $" + amount);
-            System.out.println("Loan Balance: $" + accountTotal);
+            System.out.println("Loan Balance: $" + amountLeftInLoan);
         }
         else if(amount <= 0)
         {
@@ -76,12 +81,32 @@ public class Loans extends Account
         else
         {
             paymentIncomplete = 1;
-            accountTotal -= amount;
+            amountLeftInLoan -= amount;
             paymentLeft -= amount;
             System.out.println("You paid: $" + amount);
-            System.out.println("Loan Balance: $" + accountTotal);
+            System.out.println("Loan Balance: $" + amountLeftInLoan);
             System.out.println("WARNING, you must still pay $" + paymentLeft + " by " + paymentDate);
         }
         return accountTotal;
     }
+    
+            @Override
+    public Account search(int findID){
+                String statement = "SELECT * FROM " + databaseCallTableName + " WHERE " + databaseCallAccountNumber + " = " + findID;
+
+                try{
+			ResultSet res = (ResultSet)db.select(statement);
+			while (res.next()){
+                            this.accountNumber = res.getInt("accountID");
+                            this.accountTotal = res.getDouble("TotalAmt");
+                            this.accountOpen = res.getInt("Active");
+                            this.interestRate = res.getDouble("Interest");
+                            this.MONTHLY_PAYMENT = res.getDouble("Monthly");
+                            this.amountLeftInLoan = res.getDouble("CurrAmt");
+			}
+		}catch (Exception ex){
+			ex.printStackTrace();
+		}
+		return this;
+        } 
 }

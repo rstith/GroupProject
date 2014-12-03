@@ -88,6 +88,7 @@ public class Account
 			ResultSet res = (ResultSet)db.select(statement);
 			while (res.next()){
                             this.accountNumber = res.getInt("accountID");
+                            this.accountOpen = res.getInt("Active");
 			}
 		}catch (Exception ex){
 			ex.printStackTrace();

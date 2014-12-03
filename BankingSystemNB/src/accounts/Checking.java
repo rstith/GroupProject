@@ -79,6 +79,7 @@ public class Checking extends Account
                             this.accountNumber = res.getInt("accountID");
                             this.accountTotal = res.getDouble("value");
                             this.linkedAccount = res.getString("SavingsAcc");
+                            this.accountOpen = res.getInt("Active");
                             
 			}
 		}catch (Exception ex){
