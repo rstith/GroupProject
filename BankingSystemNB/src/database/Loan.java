@@ -70,9 +70,9 @@ public class Loan {
 		LastFull = Last;
 	}
 	
-	public List<Loan> getRecord(int OwnerID)
+	public List<Loan> getAllRecords(int ownerID)
 	{
-		String statement = "SELECT * FROM loan WHERE LoanID ="+LoanID;
+		String statement = "SELECT * FROM loan WHERE CustID ="+OwnerID;
 		ResultSet res = (ResultSet)db.select(statement);
 		List<Loan> loanArray = new ArrayList<Loan>();
 		Loan myLoan = new Loan();
@@ -101,6 +101,36 @@ public class Loan {
 		return loanArray;
 	}
 	
+	public Loan getRecord(int loanID)
+	{
+		String statement = "SELECT * FROM loan WHERE AccountID ="+loanID;
+		ResultSet res = (ResultSet)db.select(statement);
+		Loan myLoan = new Loan();
+		try
+		{
+			while (res.next())
+			{
+				myLoan = new Loan();
+				myLoan.OwnerID = res.getInt(1);
+				myLoan.LoanID = res.getInt(2);
+				myLoan.Type = res.getString(3);
+				myLoan.Interest = res.getDouble(4);
+				myLoan.Monthly = res.getDouble(5);
+				myLoan.Total = res.getDouble(6);
+				myLoan.NextDue = res.getString(7);
+				myLoan.CurrAmt = res.getDouble(8);
+				myLoan.Flag = res.getBoolean(9);
+				myLoan.LastFull = res.getString(10);
+			}
+			return myLoan;
+		}
+		catch (Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		return null;
+	}
+	
 	public void addRecord(Loan newLoan)
 	{
 		String statement = "INSERT INTO loan VALUES ("+newLoan.OwnerID+","+newLoan.LoanID+",\""+newLoan.Type+"\","+newLoan.Interest+","+newLoan.Monthly+","+newLoan.Total+",\""+newLoan.NextDue+"\","+newLoan.CurrAmt+","+newLoan.Flag+",\""+newLoan.LastFull+"\");";
@@ -109,7 +139,57 @@ public class Loan {
 	
 	public void updateRecord(Loan modLoan)
 	{
-		String statement = "UPDATE loan SET OwnerID="+modLoan.OwnerID+", Type = \""+modLoan.Type+"\", Interest = "+modLoan.Interest+", Monthly = "+modLoan.Monthly+", TotalAmt = "+modLoan.Total+", NextDue = \""+modLoan.NextDue+"\", CurrAmt = "+modLoan.CurrAmt+", Flag ="+modLoan.Flag+", LastFull =\""+modLoan.LastFull+"\" WHERE LoanID = "+modLoan.LoanID+";";
+		String statement = "UPDATE loan SET CustID="+modLoan.OwnerID+", Type = \""+modLoan.Type+"\", Interest = "+modLoan.Interest+", Monthly = "+modLoan.Monthly+", TotalAmt = "+modLoan.Total+", NextDue = \""+modLoan.NextDue+"\", CurrAmt = "+modLoan.CurrAmt+", Flag ="+modLoan.Flag+", LastFull =\""+modLoan.LastFull+"\" WHERE AccountID = "+modLoan.LoanID+";";
 		db.insert(statement);
+	}
+	
+	public void deleteRecord(Loan oldLoan)
+	{
+		String statement = "DELETE FROM loan WHERE AccountID = " + oldLoan.LoanID;
+		db.insert(statement);
+	}
+	
+	public void addTrans(Transaction myTrans)
+	{
+		String statement = "INSERT INTO loanrecord VALUES ("+myTrans.TransactionID+","+myTrans.Account+",\""+myTrans.TransDate+"\","+myTrans.Value+",\""+myTrans.Description+"\");";
+		db.insert(statement);
+	}
+	
+	public void deleteTrans(Transaction oldTrans)
+	{
+		String statement = "DELETE FROM loanrecord WHERE TransactionID = "+oldTrans.TransactionID;
+		db.insert(statement);
+	}
+	
+	public Transaction getTrans(int TransID)
+	{
+		String statement = "SELECT * from loanrecord WHERE TransactionID = "+TransID;
+		ResultSet res = (ResultSet)db.select(statement);
+		Transaction tempTrans = new Transaction();
+		try{
+			
+			while (res.next())
+			{
+				tempTrans.TransactionID = res.getInt(1);
+				tempTrans.Account = res.getInt(2);
+				tempTrans.TransDate = res.getString(3);
+				tempTrans.Description = res.getString(5);
+				tempTrans.Value = res.getDouble(4);
+			}
+			return tempTrans;
+		}
+		catch (Exception ex)
+		{
+			
+		}
+		return null;
+	}
+	
+	public List<Transaction> getAllTrans(int Account)
+	{
+		String statement = "SELECT * FROM loanrecord WHERE AccountID = "+Account;
+		ResultSet res = (ResultSet)db.select(statement);
+		Transaction trans = new Transaction();
+		return trans.rsToTransactionList(res);
 	}
 }

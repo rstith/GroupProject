@@ -30,12 +30,22 @@ public class Customer {
 	String LName;
 	String FName;
 	int CustNum;
+	String SSN;
+	String Street;
+	String City;
+	String State;
+	String ZIP;
 	
-	public Customer(String Last, String First, int CustID)
+	public Customer(String Last, String First, int CustID, String ssn, String street, String city, String state, String zip)
 	{
 		LName = Last;
 		FName = First;
 		CustNum = CustID;
+		Street = street;
+		City = city;
+		State = state;
+		ZIP = zip;
+		SSN = ssn;
 	}
 	
 	public Customer()
@@ -43,6 +53,11 @@ public class Customer {
 		LName = "";
 		FName = "";
 		CustNum = 0;
+		Street = "";
+		City = "";
+		State = "";
+		ZIP = "";
+		SSN="";
 	}
 	
 	public Customer search(int CustID)
@@ -57,8 +72,12 @@ public class Customer {
 				LName = res.getString(1);
 				FName = res.getString(2);
 				CustNum = res.getInt(3);
+				SSN = res.getString(4);
+				Street = res.getString(5);
+				City = res.getString(6);
+				State = res.getString(7);
+				ZIP = res.getString(8);
 			}
-			print();
 		}
 		catch (Exception ex)
 		{
@@ -76,7 +95,7 @@ public class Customer {
 		ResultSet res = (ResultSet)db.select(statement);
 		while (res.next())
 		{
-			Customer cust = new Customer(res.getString(1), res.getString(2), res.getInt(3));
+			Customer cust = new Customer(res.getString(1), res.getString(2), res.getInt(3), res.getString(4), res.getString(5), res.getString(6), res.getString(7), res.getString(8));
 			custList.add(cust);
 		}
 		printall(custList);
@@ -100,6 +119,12 @@ public class Customer {
 				LName = res.getString(1);
 				FName = res.getString(2);
 				CustNum = res.getInt(3);
+				SSN = res.getString(4);
+				City = res.getString(5);
+				Street = res.getString(6);
+				State = res.getString(7);
+				ZIP = res.getString(8);
+
 			}
 		}
 		catch (Exception ex)
@@ -109,9 +134,17 @@ public class Customer {
 		return this;
 	}
 	
-	public void add(Customer newCust)
+	public void addRecord(Customer newCust)
 	{
-		String statement = "INSERT INTO customer VALUES (\""+newCust.LName+"\",\""+newCust.FName+"\","+newCust.CustNum+");";
+		String statement = "INSERT INTO customer VALUES (\""+newCust.LName+"\",\""+newCust.FName+"\","+"0"+",\""+newCust.SSN+"\",\""+newCust.Street+"\", \""+newCust.City+"\", \""+newCust.State+"\", \""+newCust.ZIP+"\");";
+		System.out.println(statement);
+		db.insert(statement);
+	}
+	
+	public void updateRecord(Customer newCust)
+	{
+		String statement = "UPDATE customer SET LName=\""+newCust.LName+"\", FName=\""+newCust.FName+"\", SSN=\""+newCust.SSN+"\", Street=\""+newCust.Street+"\", City=\""+newCust.City+"\", State=\""+newCust.State+"\", ZIP=\""+newCust.ZIP+"\" WHERE CustID="+newCust.CustNum+";";
+		System.out.println(statement);
 		db.insert(statement);
 	}
 	
@@ -120,6 +153,12 @@ public class Customer {
 		System.out.println(LName+"   "+FName+"    "+CustNum);
 	}
 	
+	public void delete(int CustomerID)
+	{
+		String statement = "DELETE FROM customer WHERE CustID = "+CustomerID;
+		db.insert(statement);
+		
+	}
 	public void printall(List<Customer> objectList)
 	{
 		int iterator = objectList.size();
@@ -127,5 +166,91 @@ public class Customer {
 		{
 			objectList.get(x).print();
 		}
+	}
+	
+	public List<CustomerAccounts> getCustomerAccounts(Customer cust)
+	{
+		String statement = "SELECT AccountID FROM savings WHERE OwnerID="+cust.CustNum+";";
+		List<CustomerAccounts> AccountList = new ArrayList<CustomerAccounts>();
+		ResultSet rs = (ResultSet)db.select(statement);
+		CustomerAccounts CA = new CustomerAccounts();
+		try
+		{
+			while(rs.next())
+			{
+				CA = new CustomerAccounts();
+				CA.AccountID=rs.getInt(1);
+				CA.CustID=cust.CustNum;
+				CA.AccountType="Savings";
+				AccountList.add(CA);
+			}
+		}
+		
+		catch(Exception ex)
+		{
+			
+		}
+		statement = "SELECT AccountID FROM checking WHERE CustID="+cust.CustNum+";";
+		rs = (ResultSet)db.select(statement);
+		try
+		{
+			while(rs.next())
+			{
+				CA = new CustomerAccounts();
+				CA.AccountID=rs.getInt(1);
+				CA.AccountID=cust.CustNum;
+				CA.AccountType="Checking";
+				AccountList.add(CA);
+			}
+		}
+		catch(Exception ex)
+		{}
+		statement = "SELECT AccountID FROM loan WHERE CustID="+cust.CustNum+";";
+		rs = (ResultSet)db.select(statement);
+		try
+		{
+			while(rs.next())
+			{
+				CA = new CustomerAccounts();
+				CA.AccountID=rs.getInt(1);
+				CA.AccountID=cust.CustNum;
+				CA.AccountType="Loan";
+				AccountList.add(CA);
+			}
+		}
+		catch(Exception ex)
+		{}
+		statement = "SELECT AccountID FROM cd WHERE CustID="+cust.CustNum+";";
+		rs = (ResultSet)db.select(statement);
+		try
+		{
+			while(rs.next())
+			{
+				CA = new CustomerAccounts();
+				CA.AccountID=rs.getInt(1);
+				CA.AccountID=cust.CustNum;
+				CA.AccountType="CD";
+				AccountList.add(CA);
+			}
+		}
+		catch(Exception ex)
+		{}
+		statement = "SELECT AccountID FROM ccard WHERE CustID="+cust.CustNum+";";
+		rs = (ResultSet)db.select(statement);
+		try
+		{
+			while(rs.next())
+			{
+				CA = new CustomerAccounts();
+				CA.AccountID=rs.getInt(1);
+				CA.AccountID=cust.CustNum;
+				CA.AccountType="Credit Card";
+				AccountList.add(CA);
+			}
+		}
+		catch(Exception ex)
+		{}
+		return AccountList;
+		
 	}
 }

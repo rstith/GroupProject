@@ -63,7 +63,7 @@ public class Savings {
 	
 	public Savings getRecord(int AcctNum)
 	{
-		String statement = "SELECT * FROM savings WHERE AcctID = "+AcctNum;
+		String statement = "SELECT * FROM savings WHERE AccountID = "+AcctNum;
 		ResultSet res = (ResultSet)db.select(statement);
 		Savings sav = new Savings();
 		try
@@ -89,7 +89,7 @@ public class Savings {
 	
 	public List<Transaction> getAllTrans(int Account)
 	{
-		String statement = "SELECT * FROM savingsrecord WHERE AccountNum ="+Account;
+		String statement = "SELECT * FROM savingsrecord WHERE AccountID ="+Account;
 		List<Transaction> transList = new ArrayList<Transaction>();
 		ResultSet res = (ResultSet)db.select(statement);
 		Transaction trans = new Transaction();
@@ -99,10 +99,10 @@ public class Savings {
 			{
 				trans = new Transaction();
 				trans.TransactionID = res.getInt(1);
-				trans.TransDate = res.getString(2);
-				trans.Description = res.getString(3);
-				trans.Value = res.getDouble(4);
-				trans.Account = res.getInt(5);
+				trans.Account = res.getInt(2);
+				trans.TransDate = res.getString(3);
+				trans.Description = res.getString(4);
+				trans.Value = res.getDouble(5);
 				transList.add(trans);
 			}
 		}
@@ -115,25 +115,25 @@ public class Savings {
 	
 	public void addTrans(Transaction trans)
 	{
-		String statement = "INSERT INTO savingsrecord VALUES ("+trans.TransactionID+",\""+trans.TransDate+"\",\""+trans.Description+"\","+trans.Value+","+trans.Account+");";
+		String statement = "INSERT INTO savingsrecord VALUES ("+trans.TransactionID+","+trans.Account+",\""+trans.TransDate+"\",\""+trans.Description+"\","+trans.Value+");";
 		System.out.println(statement);
 		db.insert(statement);
 	}
 	
-	public void updateSavings(Savings myRecord)
+	public void updateRecord(Savings myRecord)
 	{
-		String statement = "UPDATE savings SET Owner = "+myRecord.CustNum+",Interest ="+myRecord.Interest+", Balance="+myRecord.Value+",Overdraft="+myRecord.Overdraft+",Opened=\""+myRecord.OpenDate+"\",Active="+myRecord.Active+" WHERE AcctID = "+myRecord.Account;
+		String statement = "UPDATE savings SET OwnerID="+myRecord.CustNum+", Interest="+myRecord.Interest+", Balance="+myRecord.Value+", Overdraft="+myRecord.Overdraft+", Opened=\""+myRecord.OpenDate+"\", Active="+myRecord.Active+" WHERE AccountID="+myRecord.Account+";";
 		System.out.println(statement);
 		db.insert(statement);
 	}
 	
-	public void newRecord(Savings newSavings)
+	public void addRecord(Savings newSavings)
 	{
 		String statement = "INSERT INTO savings VALUES ("+newSavings.Account+","+newSavings.Interest+","+newSavings.Value+","+newSavings.Overdraft+",\""+newSavings.OpenDate+"\","+newSavings.Active+","+newSavings.CustNum+");";
 		db.insert(statement);
 	}
 	
-	public List<Savings> allAccounts()
+	public List<Savings> getAllAccounts()
 	{
 		String statement = "SELECT * FROM savings";
 		ResultSet res = (ResultSet)db.select(statement);
@@ -151,5 +151,41 @@ public class Savings {
 		}
 		return savArray;
 	}
-
+	
+	public void deleteRecord(int SavingsID)
+	{
+		String statement = "DELETE FROM savings WHERE AccountID = "+SavingsID;
+		db.insert(statement);
+	}
+	
+	public Transaction getTrans(int TransID)
+	{
+		String statement = "SELECT * from savingsrecord WHERE TransactionID = "+TransID;
+		System.out.println(statement);
+		ResultSet res = (ResultSet)db.select(statement);
+		Transaction tempTrans = new Transaction();
+		try{
+			
+			while (res.next())
+			{
+				tempTrans.TransactionID = res.getInt(1);
+				tempTrans.Account = res.getInt(2);
+				tempTrans.TransDate = res.getString(3);
+				tempTrans.Description = res.getString(4);
+				tempTrans.Value = res.getDouble(5);
+			}
+			return tempTrans;
+		}
+		catch (Exception ex)
+		{
+			
+		}
+		return null;
+	}
+	
+	public void deleteTrans(int TransID)
+	{
+		String statement = "DELETE FROM savingsrecord WHERE TransactionID = "+TransID;
+		db.insert(statement);
+	}
 }

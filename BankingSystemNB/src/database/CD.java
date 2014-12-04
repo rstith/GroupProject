@@ -63,13 +63,20 @@ public class CD {
 	
 	public void addRecord(CD newCD)
 	{
-		String statement = "INSERT INTO cd VALUES ("+newCD.OwnerID+","+newCD.DepositID+","+newCD.Balance+","+newCD.Interest+",\""+newCD.Maturity+"\",\""+newCD.Opened+"\",\""+newCD.Rollover+"\",\""+newCD.Penalty+"\");";
+		String statement = "INSERT INTO cd VALUES ("+newCD.OwnerID+","+"0"+","+newCD.Balance+","+newCD.Interest+",\""+newCD.Maturity+"\",\""+newCD.Opened+"\",\""+newCD.Rollover+"\",\""+newCD.Penalty+"\");";
 		db.insert(statement);
 	}
 	
-	public List<CD> getCDs(int Owner)
+	public void updateRecord(CD newCD)
 	{
-		String statement = "SELECT * FROM cd WHERE OwnerID ="+Owner;
+		String statement = "UPDATE cd SET CustID = "+newCD.OwnerID+", AccountID="+newCD.DepositID+", Value = "+newCD.Balance+", Interest="+newCD.Interest+", Maturity=\""+newCD.Maturity+"\", Opened=\""+newCD.Opened+"\", Rollover=\""+newCD.Rollover+"\", Penalty=\""+newCD.Penalty+"\" WHERE AccountID="+newCD.DepositID+";";
+		System.out.println(statement);
+		db.insert(statement);
+	}
+	
+	public List<CD> getAllRecords(int Owner)
+	{
+		String statement = "SELECT * FROM cd WHERE CustID ="+Owner;
 		ResultSet res = (ResultSet)db.select(statement);
 		List<CD> cdArray = new ArrayList<CD>();
 		CD newCD = new CD();
@@ -94,5 +101,41 @@ public class CD {
 			ex.printStackTrace();
 		}
 		return cdArray;
+	}
+	
+	public CD getRecord(int cdID)
+	{
+		String statement = "SELECT * FROM cd WHERE AccountID ="+cdID;
+		ResultSet res = (ResultSet)db.select(statement);
+		List<CD> cdArray = new ArrayList<CD>();
+		CD newCD = new CD();
+		try
+		{
+			while (res.next())
+			{
+				newCD = new CD();
+				newCD.OwnerID = res.getInt(1);
+				newCD.DepositID = res.getInt(2);
+				newCD.Balance = res.getDouble(3);
+				newCD.Interest = res.getDouble(4);
+				newCD.Maturity = res.getString(5);
+				newCD.Opened = res.getString(6);
+				newCD.Rollover = res.getString(7);
+				newCD.Penalty = res.getString(8);
+				cdArray.add(newCD);
+			}
+			return newCD;
+		}
+		catch (Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		return null;
+	}
+	
+	public void deleteRecord(CD oldCD)
+	{
+		String statement = "DELETE FROM cd WHERE AccountID = "+oldCD.DepositID;
+		db.insert(statement);
 	}
 }

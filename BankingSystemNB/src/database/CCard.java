@@ -26,6 +26,7 @@
 package database;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -67,7 +68,7 @@ public class CCard {
 	
 	public CCard getRecord(int CardID)
 	{
-		String statement = "SELECT * FROM ccard WHERE CardID = "+CardID;
+		String statement = "SELECT * FROM ccard WHERE AccountID = "+CardID;
 		ResultSet res = (ResultSet)db.select(statement);
 		CCard card = new CCard();
 		try
@@ -88,25 +89,80 @@ public class CCard {
 		{
 			ex.printStackTrace();
 		}
-		return card;
-		
+		return card;	
 	}
+	
+	public List<CCard> getAllRecords(int CustID)
+	{
+		String statement = "SELECT * FROM ccard WHERE CustID="+CustID+";";
+		ResultSet res = (ResultSet)db.select(statement);
+		List<CCard> cardArray = new ArrayList<CCard>();
+		try{
+			while (res.next())
+			{
+				CCard card = new CCard(res.getInt(1),res.getInt(2), res.getDouble(3), res.getDouble(4), res.getDouble(5), res.getDouble(6), res.getString(7), res.getString(8));
+				cardArray.add(card);
+			}
+		}
+		catch (Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		return cardArray;
+	}
+	
 	
 	public void addRecord(CCard newCard)
 	{
-		String statement = "INSERT INTO ccard VALUES ("+newCard.OwnerID+","+newCard.CardID+","+newCard.Interest+","+newCard.TotalCredit+","+newCard.OpenCredit+","+newCard.UsedCredit+",\""+newCard.NextDue+"\",\""+newCard.Penalty+"\");";
+		String statement = "INSERT INTO ccard VALUES ("+newCard.OwnerID+","+"0"+","+newCard.Interest+","+newCard.TotalCredit+","+newCard.OpenCredit+","+newCard.UsedCredit+",\""+newCard.NextDue+"\",\""+newCard.Penalty+"\");";
 		db.insert(statement);
 	}
 	
 	public void updateRecord(CCard modCard)
 	{
-		String statement = "UPDATE ccard SET OwnerID = "+modCard.OwnerID+", Interest = "+modCard.Interest+", TotalCredit = "+modCard.TotalCredit+", OpenCredit = "+modCard.OpenCredit+", UsedCredit = "+modCard.UsedCredit+", NextDue = \""+modCard.NextDue+"\", Penalty = \""+modCard.Penalty+"\";";
+		String statement = "UPDATE ccard SET CustID = "+modCard.OwnerID+", Interest = "+modCard.Interest+", TotalCredit = "+modCard.TotalCredit+", OpenCredit = "+modCard.OpenCredit+", UsedCredit = "+modCard.UsedCredit+", NextDue = \""+modCard.NextDue+"\", Penalty = \""+modCard.Penalty+"\" WHERE AccountID="+modCard.CardID+";";
+		db.insert(statement);
+	}
+	
+	public void deleteRecord(CCard deleter)
+	{
+		String statement = "DELETE FROM ccard WHERE AccountID = "+deleter.CardID;
+		db.insert(statement);
+	}
+	
+	public Transaction getTrans(int TransID)
+	{
+		String statement = "SELECT * from ccardrecord WHERE TransactionID = "+TransID;
+		ResultSet res = (ResultSet)db.select(statement);
+		Transaction tempTrans = new Transaction();
+		try{
+			
+			while (res.next())
+			{
+				tempTrans.TransactionID = res.getInt(1);
+				tempTrans.Account = res.getInt(2);
+				tempTrans.TransDate = res.getString(3);
+				tempTrans.Description = res.getString(5);
+				tempTrans.Value = res.getDouble(4);
+			}
+			return tempTrans;
+		}
+		catch (Exception ex)
+		{
+			
+		}
+		return null;
+	}
+	
+	public void deleteTrans(Transaction Trans)
+	{
+		String statement = "DELETE FROM ccardrecord WHERE TransactionID = "+Trans.TransactionID;
 		db.insert(statement);
 	}
 	
 	public List<Transaction> getAllTrans(int CardID)
 	{
-		String statement = "SELECT * FROM ccardrecord WHERE CardID = "+CardID;
+		String statement = "SELECT * FROM ccardrecord WHERE AccountID = "+CardID;
 		System.out.println(statement);
 		ResultSet res = (ResultSet)db.select(statement);
 		Transaction myTrans = new Transaction();

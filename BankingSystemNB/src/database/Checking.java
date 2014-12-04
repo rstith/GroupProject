@@ -3,7 +3,7 @@
  * Attributes:
  * 
  * int OwnerID - Customer number associated with the owner of this checking account
- * int AcctID - Unique identifier for this particular checking account
+ * int AccountID - Unique identifier for this particular checking account
  * double Balance - How much money is here
  * double Interest - How much money this account is taking in. If any
  * Date Opened - Date when account was opened
@@ -34,7 +34,7 @@ import java.util.ArrayList;
 public class Checking {
 
 	public int OwnerID;
-	public int AcctID;
+	public int AccountID;
 	public double Balance;
 	public double Interest;
 	public String Opened;
@@ -48,7 +48,7 @@ public class Checking {
 	public Checking()
 	{
 		OwnerID = 0;
-		AcctID = 0;
+		AccountID = 0;
 		Balance = 0;
 		Interest = 0;
 		Opened = null;
@@ -61,7 +61,7 @@ public class Checking {
 	public Checking(int Owner, int Account, double Bal, double Int, String Open, int Savings, String AcctType, double Average, boolean ActiveAcct)
 	{
 		OwnerID = Owner;
-		AcctID = Account;
+		AccountID = Account;
 		Balance = Bal;
 		Interest = Int;
 		Opened = Open;
@@ -73,13 +73,16 @@ public class Checking {
 	
 	public Checking getRecord(int Account)
 	{
-		String statement = "SELECT * FROM checking WHERE AcctID = "+Account+";";
-		System.out.println(statement);
+		String statement = "SELECT * FROM checking WHERE AccountID = "+Account+";";
 		ResultSet res = (ResultSet)db.select(statement);
-		Checking check;
+
 		try
 		{
-			check = new Checking(res.getInt(1), res.getInt(2), res.getDouble(3), res.getDouble(4), res.getString(5), res.getInt(6), res.getString(7), res.getDouble(8), res.getBoolean(9));
+			Checking check = new Checking();
+			while (res.next())
+			{
+				check = new Checking(res.getInt(1), res.getInt(2), res.getDouble(3), res.getDouble(4), res.getString(5), res.getInt(6), res.getString(7), res.getDouble(8), res.getBoolean(9));
+			}
 			return check;
 		}
 		catch(Exception ex)
@@ -91,7 +94,7 @@ public class Checking {
 	
 	public List<Transaction> getAllTrans(int Account)
 	{
-		String statement = "SELECT * FROM checkingrecord WHERE AccountNum = "+Account;
+		String statement = "SELECT * FROM checkingrecord WHERE AccountID = "+Account;
 		ResultSet res = (ResultSet)db.select(statement);
 		Transaction trans = new Transaction();
 		return trans.rsToTransactionList(res);
@@ -108,7 +111,7 @@ public class Checking {
 			while (res.next())
 			{
 				check.OwnerID = res.getInt(1);
-				check.AcctID = res.getInt(2);
+				check.AccountID = res.getInt(2);
 				check.Balance = res.getDouble(3);
 				check.Interest = res.getDouble(4);
 				check.Opened = res.getString(5);
@@ -126,17 +129,59 @@ public class Checking {
 		return checkArray;
 	}
 	
-	public void insertRecord(Checking newCheck)
+	public void addTrans(Transaction myTrans)
 	{
-		String statement = "INSERT INTO checking VALUES ("+newCheck.OwnerID+","+newCheck.AcctID+","+newCheck.Balance+","+newCheck.Interest+",\""+newCheck.Opened.toString()+"\","+newCheck.SavingsAcct+",\""+newCheck.Type+"\","+newCheck.AvgBal+","+newCheck.Active+");";
+		String statement = "INSERT INTO checkingrecord VALUES ("+myTrans.TransactionID+","+myTrans.Account+",\""+myTrans.TransDate+"\","+myTrans.Value+",\""+myTrans.Description+"\");";
+		db.insert(statement);
+	}
+	
+	public void addRecord(Checking newCheck)
+	{
+		String statement = "INSERT INTO checking VALUES ("+newCheck.OwnerID+","+newCheck.AccountID+","+newCheck.Balance+","+newCheck.Interest+",\""+newCheck.Opened.toString()+"\","+newCheck.SavingsAcct+",\""+newCheck.Type+"\","+newCheck.AvgBal+","+newCheck.Active+");";
+		db.insert(statement);
+	}
+	
+	public void updateRecord(Checking newCheck)
+	{
+		String statement = "UPDATE checking SET CustID="+newCheck.OwnerID+", Value="+newCheck.Balance+", Interest = "+newCheck.Interest+", Opened=\""+newCheck.Opened+"\", SavingsAcct="+newCheck.SavingsAcct+", Type=\""+newCheck.Type+"\", AvgBal="+newCheck.AvgBal+", Active="+newCheck.Active+" WHERE AccountID="+newCheck.AccountID;
 		System.out.println(statement);
 		db.insert(statement);
 	}
 	
-	public void changeRecord(Checking newCheck)
+	public void deleteRecord(Checking newCheck)
 	{
-		String statement = "UPDATE checking SET OwnerID="+newCheck.OwnerID+", Value="+newCheck.Balance+", Interest = "+newCheck.Interest+", Opened="+newCheck.Opened+", SavingsAcct="+newCheck.SavingsAcct+", Type=\""+newCheck.Type+"\", AvgBal="+newCheck.AvgBal+", Active="+newCheck.Active+" WHERE AcctID="+newCheck.AcctID;
+		String statement = "DELETE FROM checking WHERE AccountID = " + newCheck.AccountID;
+
 		db.insert(statement);
 	}
 	
+	public void deleteTransaction(int TransID)
+	{
+		String statement = "DELETE FROM checkingrecord WHERE TransactionID = "+TransID;
+		db.insert(statement);
+	}
+	
+	public Transaction getTrans(int TransID)
+	{
+		String statement = "SELECT * from checkingrecord WHERE TransactionID = "+TransID;
+		ResultSet res = (ResultSet)db.select(statement);
+		Transaction tempTrans = new Transaction();
+		try{
+			
+			while (res.next())
+			{
+				tempTrans.TransactionID = res.getInt(1);
+				tempTrans.Account = res.getInt(2);
+				tempTrans.TransDate = res.getString(3);
+				tempTrans.Description = res.getString(5);
+				tempTrans.Value = res.getDouble(4);
+			}
+			return tempTrans;
+		}
+		catch (Exception ex)
+		{
+			
+		}
+		return null;
+	}
 }
