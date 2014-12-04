@@ -182,12 +182,14 @@ public class CreateSavingsAccount extends javax.swing.JFrame {
         double    deposit = Double.parseDouble(depositString);
         
         String monthString = (String)jComboBox2.getSelectedItem();   
-        String dayString = (String)jComboBox2.getSelectedItem();   
-        String yearString = (String)jComboBox2.getSelectedItem();   
+        String dayString = (String)jComboBox3.getSelectedItem();   
+        String yearString = (String)jComboBox4.getSelectedItem();   
         
         int month = Integer.parseInt(monthString);
         int day = Integer.parseInt(dayString);
         int year = Integer.parseInt(yearString);
+        month -= 1;
+        year -= 1900;
         
         if (accountIDString.equals("")){
             jLabel10.setText("Enter ALL Text");
@@ -196,11 +198,20 @@ public class CreateSavingsAccount extends javax.swing.JFrame {
         }
         else{
             /*
-             * 1. customerID IS HARDCODED TO 2. NEED A FIELD TO INPUT OR PASS FROM PREVIOUS SCREEN
-             * 2. HARD CODED savings AS ACCOUNT TYPE
+             * 1. customerID IS HARDCODED 
              */
-            Savings newSavings = new Savings(accountID, 2, deposit, "savings", day, month, year);//SAVINGS HARD CODED
-            newSavings.add();
+            
+            if(accountType.equals("Simple Savings"))
+            {
+                Savings newSavings = new Savings(accountID, 2, deposit, "savings", day, month, year);//SAVINGS HARD CODED
+                newSavings.add();
+            }
+            else if(accountType.equals("CD"))
+            {
+                /*
+                 * NEED TO IMPLEMENT CD
+                 */
+            }
         }
         
         dispose();

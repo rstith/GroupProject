@@ -1,5 +1,8 @@
 package gui;
 
+//import accounts.Checking;
+import database.Checking;
+
 public class CreateCheckingAccount extends javax.swing.JFrame {
 
     /**
@@ -34,6 +37,7 @@ public class CreateCheckingAccount extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -61,8 +65,13 @@ public class CreateCheckingAccount extends javax.swing.JFrame {
 
         jLabel5.setText("Account Type");
 
-        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Thats My Bank", "Gold Diamond" }));
+        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "TMB", "GD" }));
         jComboBox5.setToolTipText("Account Type");
+        jComboBox5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox5ActionPerformed(evt);
+            }
+        });
 
         jLabel6.setText("Deposit Amount");
 
@@ -143,6 +152,10 @@ public class CreateCheckingAccount extends javax.swing.JFrame {
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(243, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(268, 268, 268))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -171,21 +184,62 @@ public class CreateCheckingAccount extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(445, Short.MAX_VALUE)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(141, 141, 141)
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String customerIDString = jTextField1.getText(); //This should pull from the database.
+        int    customerID = Integer.parseInt(customerIDString);                             
+        String accountIDString = jTextField2.getText(); //This should pull from the database.
+        int    accountID = Integer.parseInt(accountIDString);
+        String accountType = (String)jComboBox5.getSelectedItem();          
+        String depositString = jTextField3.getText(); //This should pull from the database.
+        double    deposit = Double.parseDouble(depositString);
+        
+        String monthString = (String)jComboBox2.getSelectedItem();   
+        String dayString = (String)jComboBox3.getSelectedItem();   
+        String yearString = (String)jComboBox4.getSelectedItem();   
+        
+        int month = Integer.parseInt(monthString);
+        int year = Integer.parseInt(yearString);
+        int day = Integer.parseInt(dayString);
+        
+        //monthString = Integer.toString(month);
+        //yearString = Integer.toString(year);
+        
+        String date = "" + year + "-" + month + "-" + day + "";
+        
+        if (customerIDString.equals("")){
+            jLabel10.setText("Enter ALL Text");
+        }else if(accountIDString.equals("")){
+            jLabel10.setText("Enter ALL Text");
+        }else if(depositString.equals("")){
+            jLabel10.setText("Enter ALL Text");
+        }
+        else{
+            /*
+             * 1. Interest is 0.0
+             * 2. avg balance is 0.0
+             * 3. Passing savings account 99. Needs to be NULL
+             */
+            Checking newChecking = new Checking(customerID, accountID, deposit, 0.0 , date, 99, accountType, 0.0, true);
+            newChecking.insertRecord(newChecking);
+        }
         dispose();
         ManagerActionScreen mas = new ManagerActionScreen();
         mas.setResizable(false);
@@ -205,6 +259,10 @@ public class CreateCheckingAccount extends javax.swing.JFrame {
         la.setResizable(false);
         la.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jComboBox5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -249,6 +307,7 @@ public class CreateCheckingAccount extends javax.swing.JFrame {
     private javax.swing.JComboBox jComboBox4;
     private javax.swing.JComboBox jComboBox5;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
