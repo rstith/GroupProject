@@ -71,6 +71,7 @@ public class Checking {
 		Active = ActiveAcct;
 	}
 	
+	
 	public Checking getRecord(int Account)
 	{
 		String statement = "SELECT * FROM checking WHERE AccountID = "+Account+";";
@@ -137,15 +138,36 @@ public class Checking {
 	
 	public void addRecord(Checking newCheck)
 	{
-		String statement = "INSERT INTO checking VALUES ("+newCheck.OwnerID+","+newCheck.AccountID+","+newCheck.Balance+","+newCheck.Interest+",\""+newCheck.Opened.toString()+"\","+newCheck.SavingsAcct+",\""+newCheck.Type+"\","+newCheck.AvgBal+","+newCheck.Active+");";
-		db.insert(statement);
+		if (newCheck.SavingsAcct == -1)
+		{
+			String statement = "INSERT INTO checking VALUES ("+newCheck.OwnerID+","+newCheck.AccountID+","+newCheck.Balance+","+newCheck.Interest+",\""+newCheck.Opened.toString()+"\","+"NULL"+",\""+newCheck.Type+"\","+newCheck.AvgBal+","+newCheck.Active+");";
+			db.insert(statement);
+		}
+		else
+		{
+			String statement = "INSERT INTO checking VALUES ("+newCheck.OwnerID+","+newCheck.AccountID+","+newCheck.Balance+","+newCheck.Interest+",\""+newCheck.Opened.toString()+"\","+newCheck.SavingsAcct+",\""+newCheck.Type+"\","+newCheck.AvgBal+","+newCheck.Active+");";
+			db.insert(statement);
+		}
+
 	}
 	
 	public void updateRecord(Checking newCheck)
 	{
-		String statement = "UPDATE checking SET CustID="+newCheck.OwnerID+", Value="+newCheck.Balance+", Interest = "+newCheck.Interest+", Opened=\""+newCheck.Opened+"\", SavingsAcct="+newCheck.SavingsAcct+", Type=\""+newCheck.Type+"\", AvgBal="+newCheck.AvgBal+", Active="+newCheck.Active+" WHERE AccountID="+newCheck.AccountID;
-		System.out.println(statement);
-		db.insert(statement);
+		if (newCheck.SavingsAcct == -1)
+		{	
+		
+			String statement = "UPDATE checking SET CustID="+newCheck.OwnerID+", Value="+newCheck.Balance+", Interest = "+newCheck.Interest+", Opened=\""+newCheck.Opened+"\","+"NULL"+", Type=\""+newCheck.Type+"\", AvgBal="+newCheck.AvgBal+", Active="+newCheck.Active+" WHERE AccountID="+newCheck.AccountID;
+			System.out.println(statement);
+			db.insert(statement);
+		}
+		else
+		{
+			String statement = "UPDATE checking SET CustID="+newCheck.OwnerID+", Value="+newCheck.Balance+", Interest = "+newCheck.Interest+", Opened=\""+newCheck.Opened+"\", SavingsAcct="+newCheck.SavingsAcct+", Type=\""+newCheck.Type+"\", AvgBal="+newCheck.AvgBal+", Active="+newCheck.Active+" WHERE AccountID="+newCheck.AccountID;
+			System.out.println(statement);
+			db.insert(statement);
+		}
+
+
 	}
 	
 	public void deleteRecord(Checking newCheck)
