@@ -40,6 +40,7 @@ public class CCard {
 	public double UsedCredit;
 	public String NextDue;
 	public String Penalty;
+	public boolean Active;
 	SQLDriver db = new SQLDriver();
 	
 	public CCard()
@@ -52,9 +53,10 @@ public class CCard {
 		UsedCredit=0;
 		NextDue=null;
 		Penalty="";
+		Active = false;
 	}
 	
-	public CCard(int Owner, int Card, double Int, double Total, double Open, double Used, String Next, String Pen)
+	public CCard(int Owner, int Card, double Int, double Total, double Open, double Used, String Next, String Pen, boolean Act)
 	{
 		OwnerID = Owner;
 		CardID = Card;
@@ -64,6 +66,8 @@ public class CCard {
 		UsedCredit = Used;
 		NextDue = Next;
 		Penalty = Pen;
+		Active = Act;
+		
 	}
 	
 	public CCard getRecord(int CardID)
@@ -83,6 +87,7 @@ public class CCard {
 				card.UsedCredit = res.getDouble(6);
 				card.NextDue = res.getString(7);
 				card.Penalty = res.getString(8);
+				card.Active = res.getBoolean(9);
 			}
 		}
 		catch (Exception ex)
@@ -100,7 +105,7 @@ public class CCard {
 		try{
 			while (res.next())
 			{
-				CCard card = new CCard(res.getInt(1),res.getInt(2), res.getDouble(3), res.getDouble(4), res.getDouble(5), res.getDouble(6), res.getString(7), res.getString(8));
+				CCard card = new CCard(res.getInt(1),res.getInt(2), res.getDouble(3), res.getDouble(4), res.getDouble(5), res.getDouble(6), res.getString(7), res.getString(8), res.getBoolean(9));
 				cardArray.add(card);
 			}
 		}
@@ -114,13 +119,13 @@ public class CCard {
 	
 	public void addRecord(CCard newCard)
 	{
-		String statement = "INSERT INTO ccard VALUES ("+newCard.OwnerID+","+"0"+","+newCard.Interest+","+newCard.TotalCredit+","+newCard.OpenCredit+","+newCard.UsedCredit+",\""+newCard.NextDue+"\",\""+newCard.Penalty+"\");";
+		String statement = "INSERT INTO ccard VALUES ("+newCard.OwnerID+","+"0"+","+newCard.Interest+","+newCard.TotalCredit+","+newCard.OpenCredit+","+newCard.UsedCredit+",\""+newCard.NextDue+"\",\""+newCard.Penalty+"\", "+newCard.Active+");";
 		db.insert(statement);
 	}
 	
 	public void updateRecord(CCard modCard)
 	{
-		String statement = "UPDATE ccard SET CustID = "+modCard.OwnerID+", Interest = "+modCard.Interest+", TotalCredit = "+modCard.TotalCredit+", OpenCredit = "+modCard.OpenCredit+", UsedCredit = "+modCard.UsedCredit+", NextDue = \""+modCard.NextDue+"\", Penalty = \""+modCard.Penalty+"\" WHERE AccountID="+modCard.CardID+";";
+		String statement = "UPDATE ccard SET CustID = "+modCard.OwnerID+", Interest = "+modCard.Interest+", TotalCredit = "+modCard.TotalCredit+", OpenCredit = "+modCard.OpenCredit+", UsedCredit = "+modCard.UsedCredit+", NextDue = \""+modCard.NextDue+"\", Penalty = \""+modCard.Penalty+"\", Active="+modCard.Active+" WHERE AccountID="+modCard.CardID+";";
 		db.insert(statement);
 	}
 	
