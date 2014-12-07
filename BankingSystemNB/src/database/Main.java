@@ -9,12 +9,9 @@ public class Main {
 		// TODO Auto-generated method stub
 
 
-			SQLDriver db = new SQLDriver();
 			Scanner reader = new Scanner(System.in);
 			int decision = 0;
 			Customer cust = new Customer();
-			java.util.Calendar cal = java.util.Calendar.getInstance();
-			java.util.Date utilDate = cal.getTime();
 			List<Loan> transList;
 			Loan loan = new Loan();
 			
@@ -67,7 +64,7 @@ public class Main {
 						System.out.println("Last Full Payment");
 						String LastFull = reader.next();
 						
-						loan = new Loan(CustNum, LoanNum, Type, Interest, Monthly, Total, NextDue, Owed, Flag, LastFull);
+						loan = new Loan(CustNum, LoanNum, Type, Interest, Monthly, Total, NextDue, Owed, Flag, LastFull, true);
 						loan.updateRecord(loan);
 						
 						
@@ -160,14 +157,7 @@ public class Main {
 				}
 				case 5:
 				{
-					System.out.print("Enter customer account number:");
-					int custAcct = reader.nextInt();
-					System.out.print("Enter new First Name:");
-					String First = reader.nextLine();
-					System.out.print("Enter new Last Name:");
-					String Last = reader.nextLine();
-					//db.updateCustomer(custAcct, First, Last);
-					break;
+
 				}
 				case 6:
 				{
@@ -177,15 +167,8 @@ public class Main {
 				}
 				case 7:
 				{
-					List<CustomerAccounts> CArray = new ArrayList<CustomerAccounts>();
-					Customer newCust = new Customer();
-					newCust = newCust.search(1);
-					System.out.println(newCust.LName);
-					CArray = newCust.getCustomerAccounts(newCust);
-					for(int x=0;x<CArray.size();x++)
-					{
-						System.out.println(CArray.get(x).AccountType);
-					}
+					Employee newEmp = new Employee();
+					System.out.println(newEmp.validLogin("smartin", "password"));
 				}
 				}
 

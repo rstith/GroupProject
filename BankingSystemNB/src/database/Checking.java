@@ -6,7 +6,7 @@
  * int AccountID - Unique identifier for this particular checking account
  * double Balance - How much money is here
  * double Interest - How much money this account is taking in. If any
- * Date Opened - Date when account was opened
+ * String Opened - Date when account was opened
  * int SavingsAcct - Number of savings account attached to this checking account, for overdraft purposes
  * String Type - Gold/Diamond or ThatsMyBank. I don't care what notation you use, but be consistent
  * double AvgBal - average balance, for determining if this is a Gold/Diamond or ThatsMyBank account
@@ -15,14 +15,17 @@
  * Methods:
  * 
  * Checking() - empty constructor. Initializes everything to 0 or null or empty string
- * Checking(int, int, double, double, Date, int, String, double, boolean) - takes in data in order described above
- * Checking getRecord(int Account) - takes in an account number, returns the record associated with that number as a Checking object
+ * Checking(int, int, double, double, String, int, String, double, boolean) - takes in data in order described above
  * List<Transaction> getAllTrans(int Account) - returns an ArrayList of Transaction objects, each of which is a transaction associated
  *   with the account number passed in
  * List<Checking> getAllRecords() - returns all checking accounts in the system, as an ArrayList of Checking objects
- * void insertRecord(Checking) - accepts an object of type Checking, and inserts the values into the checking table
- * void changeRecord(Checking) - accepts an object of type Checking, and changes the data related to that object, based on account number 
- * 
+ * void addTrans(Transaction) - accepts an object of type Transaction and inserts its information into the database.
+ * void deleteTransaction(int) - accepts a transaction # as an int, removes its information from the database
+ * Transaction getTrans(int) - accepts a transaction # as an int, returns its information as a Transaction object.
+ * void addRecord(Checking) - accepts an object of type Checking, and inserts the values into the checking table
+ * void updateRecord(Checking) - accepts an object of type Checking, and changes the data related to that object, based on account number 
+ * void deleteRecord(Checking) - accepts an object of type Checking and removes its information from the database.
+ * Checking getRecord(int Account) - takes in an account number, returns the record associated with that number as a Checking object
  */
 
 package database;
@@ -57,6 +60,7 @@ public class Checking {
 		AvgBal = 0;
 		Active = true;
 	}
+	
 	
 	public Checking(int Owner, int Account, double Bal, double Int, String Open, int Savings, String AcctType, double Average, boolean ActiveAcct)
 	{

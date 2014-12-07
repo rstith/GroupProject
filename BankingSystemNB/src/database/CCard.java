@@ -10,15 +10,21 @@
  * double UsedCredit - Amount owed on account
  * Date NextDue - Date the next payment must be made. Reference Java Date object
  * String Penalty - Description of the penalty structure for this account
+ * boolean Active - Is account currently active or not
  * SQLDriver db - This is how the object connects to the DB. Please don't touch
  * 
  * Methods:
  * 
  * CCard() - Empty constructor, initializes everything to 0, null, or empty string
- * CCard(int, int, double, double, double, double, Date, String). This is the full-data constructor, with the entries in the order above.
+ * CCard(int, int, double, double, double, double, Date, String). This is the full-data constructor, with the entries in the order above. Active defaults to true.
+ * CCard(int, int, double, double, double, double, Date, String). This is the full-data constructor, with the entries in the order above. Active can be turned off.
+
  * CCard getRecord(int CardID) - Returns a CCard object with the data associated with the account number.
  * void addRecord(CCard newCard) - Accepts a CCard object and adds the data to the credit card table.
  * void updateRecord(CCard, newCard) - Accepts a CCard object and uses its CardID to update its own record in the table.
+ * void deleteRecord(CCard deleter) - Accepts a CCard object and removes that record from the database.
+ * Transaction getTrans(int TransID) - Accepts a transaction ID# and returns the Transaction object associated.
+ * void deleteTrans(Transaction) - Accepts a Transaction object and then removes that transaction record from the database.
  * List<Transaction> getAllTrans(int CardID) - Returns all transactions associated with the account number passed in. In ArrayList format
  * void addTrans(Transaction) - Takes a Transaction object and adds it to the credit card transaction table
  * 

@@ -1,3 +1,24 @@
+/*This class is used for entering employee information into the database, including their
+ * names, login information, and whether or not they are a manager.
+ * 
+ * data:
+ * String LName - Employee's last name
+ * String FName - Employee's first name
+ * int EmpID - Employee's Employee ID number
+ * String UName - Username for login
+ * String Pass - Password for login
+ * Boolean Manager - Whether or not employee is manager
+ * 
+ * Methods:
+ * void addRecord(Employee) - Accepts an Employee object, adds information to database
+ * void updateRecord(Employee) - Accept Employee object, updates existing database record matching EmpID
+ * void deleteRecord(Employee) - Accepts Employee object, removes matching record from database
+ * Employee getRecord(int EmpNum) - Accepts Employee number as int, returns Employee record matching employee ID
+ * List<Employee> getAllRecords() - returns arraylist of Employees working here
+ * boolean validLogin(String username, String password) - Accepts username and password, returns true if both match table data
+ *  
+ */
+
 package database;
 
 import java.sql.*;
@@ -21,6 +42,7 @@ public class Employee {
 		EmpID=0;
 		UName="";
 		Pass="";
+		Manager = false;
 	}
 	
 	public Employee(String Last, String First, int EmpNum, String User, String Password, boolean Man)
@@ -101,5 +123,17 @@ public class Employee {
 	{
 		String statement = "DELETE FROM employee WHERE EmpID="+newEmp.EmpID+";";
 		db.insert(statement);
+	}
+	
+	public boolean validLogin(String user, String password)
+	{
+		String statement = "SELECT * FROM employee WHERE UName=\""+user+"\" AND Pass=\""+password+"\";";
+		ResultSet rs = (ResultSet)db.select(statement);
+		try{
+			return rs.next();
+		}
+		catch(Exception ex)
+		{}
+		return false;
 	}
 }

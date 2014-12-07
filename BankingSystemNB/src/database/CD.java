@@ -16,6 +16,9 @@
  * CD() - Default constructor. Initializes all to 0, empty string, or null
  * CD(int, int, double, double, Date, Date, Date, String) - full-data constructor, takes input in above order.
  * void addRecord(CD) - Takes an object of type CD, converts it and puts it into the CD table in the database
+ * void updateRecord(CD) - Accepts a CD object with an entry already existing, and updates the database record that has the same AccountID.
+ * void getRecord(int AccountID) - Accepts the ID of an existing record and returns that record as an object of type CD.
+ * void deleteRecord(CD) - Accepts a CD object and removes its record from the database.
  * List<CD> getCDs(int Owner) - Accepts a customer number, returns a ListArray of CDs owned by customer
  * 
  */

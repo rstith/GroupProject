@@ -15,10 +15,16 @@
  * Savings() - Empty constructor, initializes everything to 0 or null
  * Savings (int, double, int, double, double, Date, Boolean) - Full-data constructor, accepts data in order described above
  * Savings getRecord(int AcctNum) - accepts unique savings account number, returns Savings object with all information
+ * void updateRecord(Savings) - Takes Savings object of already-existing account, updates table with new information
+ * void addRecord(Savings) - Takes Savings object, creates a new Savings account with information
+ * void deleteRecord(int) - Takes savings account ID as integer, deletes associated record from database
+ * void deleteRecord(Savings) - Takes Savings object, deletes associated record from database
+ * List<Savings> getAllAccounts(int) - accepts customer ID as int, returns all owner's savings accounts as an arraylist of Savings objects
  * List<Transaction> getAllTrans(int Account) - Returns a list of all transactions associated with the passed-in Account number, as ArrayList
  * void addTrans(Transaction) - Takes Transaction object passed in, adds information to savings transaction table
- * void updateSavings(Savings) - Takes Savings object of already-existing account, updates table with new information
- * void newRecord(Savings) - Takes Savings object, creates a new Savings account with information
+ * void getTrans(int) - Accepts transaction ID as int, returns associated record as Transaction object
+ * void deleteTrans(int) - Accepts transaction ID as int, removes associated record from database
+ * 
  * List<Savings> allAccounts() - Returns an ArrayList of all Savings accounts, as Savings objects
  * 
  */
@@ -133,9 +139,9 @@ public class Savings {
 		db.insert(statement);
 	}
 	
-	public List<Savings> getAllAccounts()
+	public List<Savings> getAllAccounts(int CustID)
 	{
-		String statement = "SELECT * FROM savings";
+		String statement = "SELECT * FROM savings WHERE CustID="+CustID+";";
 		ResultSet res = (ResultSet)db.select(statement);
 		List<Savings> savArray = new ArrayList<Savings>();
 		try{
@@ -155,6 +161,12 @@ public class Savings {
 	public void deleteRecord(int SavingsID)
 	{
 		String statement = "DELETE FROM savings WHERE AccountID = "+SavingsID;
+		db.insert(statement);
+	}
+	
+	public void deleteRecord(Savings oldSav)
+	{
+		String statement = "DELETE FROM savings WHERE AccountID = "+oldSav.Account;
 		db.insert(statement);
 	}
 	

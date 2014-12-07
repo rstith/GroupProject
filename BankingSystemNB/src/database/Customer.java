@@ -5,15 +5,23 @@
  * String LName - Customer's last name
  * String FName - Customer's first name
  * int CustNum - Unique number associated with this customer
+ * String SSN - Customer Social Security number
+ * String Street - Street Address
+ * String City - City of residence
+ * String State - State of residence
+ * String ZIP - ZIP code of residence
  * 
  * Methods:
  * 
  * Customer() - Empty constructor, initializes to empty strings and 0;
- * Customer(String, String, int). Accepts Last name, First name, Customer number in that order
+ * Customer(String, String, int, String, String, String, String, String). Accepts customer information in the order listed above.
  * Customer search(int) - Returns Customer object associated with passed in Customer Number
  * Customer search(String) - Returns Customer object associated with last name passed in
  * List<Customer> getAll() - Returns a list of all customers of this bank, as an ArrayList of Customer objects
- * void add(Customer) - Adds the passed-in Customer object to the Customer table
+ * void addRecord(Customer) - Adds the passed-in Customer object to the Customer table
+ * void updateRecord(Customer) - Accepts Customer object, updates the record in the database that has the same CustID
+ * void delete(int) - Accepts Customer ID as integer, removes that customer record from database
+ * List<CustomerAccounts> getCustomerAccounts(Customer) - Accepts Customer object, returns a CustomerAccounts arraylist with all account numbers and types
  * print and printall - Using for testing, don't worry about these
  */
 
