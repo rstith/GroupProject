@@ -58,6 +58,22 @@ public class Loan {
 		Active = false;
 	}
 	
+	public Loan(int Owner, int Loan, String LoanType, double Int, double Month, double Ttl, String Next, double Current, boolean Flagged, String Last)
+	{
+		OwnerID = Owner;
+		LoanID = Loan;
+		Type = LoanType;
+		Interest = Int;
+		Monthly = Month;
+		Total = Ttl;
+		NextDue = Next;
+		CurrAmt = Current;
+		Flag = Flagged;
+		LastFull = Last;
+		Active = true;
+	}
+	
+	
 	public Loan(int Owner, int Loan, String LoanType, double Int, double Month, double Ttl, String Next, double Current, boolean Flagged, String Last, boolean Act)
 	{
 		OwnerID = Owner;
@@ -70,6 +86,7 @@ public class Loan {
 		CurrAmt = Current;
 		Flag = Flagged;
 		LastFull = Last;
+		Active = Act;
 	}
 	
 	public List<Loan> getAllRecords(int ownerID)

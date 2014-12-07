@@ -67,7 +67,19 @@ public class CCard {
 		NextDue = Next;
 		Penalty = Pen;
 		Active = Act;
-		
+	}
+	
+	public CCard(int Owner, int Card, double Int, double Total, double Open, double Used, String Next, String Pen)
+	{
+		OwnerID = Owner;
+		CardID = Card;
+		Interest = Int;
+		TotalCredit = Total;
+		OpenCredit = Open;
+		UsedCredit = Used;
+		NextDue = Next;
+		Penalty = Pen;
+		Active = true;
 	}
 	
 	public CCard getRecord(int CardID)
