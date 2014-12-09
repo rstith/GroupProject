@@ -183,7 +183,7 @@ public class Person extends People {
         //Delete Person
         public void delete(){
                 String statement = "DELETE FROM "+databaseCallTableName+" WHERE "+databaseCallID+" = "+this.ID;
-		db.delete(statement);
+		db.insert(statement);
         }
         
 	//Print Person

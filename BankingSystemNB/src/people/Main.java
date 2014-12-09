@@ -9,9 +9,9 @@ public class Main {
 		Manager testManager = new Manager(1, "Jaren", "Fjellman", "486638593", "2343 South St.", "Des Moines", "IA", "50022");
 		Teller testTeller = new Teller(1, "Jacob", "Fjellman", "582756283", "1 West St.", "Saint Joseph", "MO", "23451");
 		people.Customer testCustomer = new people.Customer(1, "Lily", "Fjellman", "363879283", "5243 East Road Ave.", "Atlantic", "IA", "50022");
-                database.Customer testDBCustomer = new database.Customer("MyLastName", "MyFirstName", 1);
+                database.Customer testDBCustomer = new database.Customer("MyLastName", "MyFirstName", 0, "123456789", "123 Fake St.", "Nowhere", "MA", "11111");
                 
-                
+
 
 		testPerson.print();
 		System.out.println();
